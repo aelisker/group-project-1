@@ -1,12 +1,25 @@
-# Weather Dashboard Challenge
+# Group Project #1 Challenge
 
-## Purpose
-Create a dashboard that queries an API to show the current weather and five day forecast of the user's choice. When a city and state are searched, that city will be added to a list that will persist on refresh. Up to nine cities total will be stored at any one time, at which point the oldest city will be replaced on an subsequent searches. The user can click on a city in the list to go to that city's weather results.
+## Fulfill the following requirements:
+Use a CSS framework other than Bootstrap.
+Be deployed to GitHub Pages.
+Be interactive (i.e., accept and respond to user input).
+Use at least two server-side APIs.
+Does not use alerts, confirms, or prompts (use modals).
+Use client-side storage to store persistent data.
+Be responsive.
+Have a polished UI.
+Have a clean repository that meets quality coding standards (file structure, naming conventions, follows best practices for class/id naming conventions, indentation, quality comments, etc.).
+Have a quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
 
-Please search by typing the the full name of the city, a comma, and the full name of the state, like so: "Portland, Oregon".
+## Presentation requirements:
+You and your group will give a 10-minute presentation on your project, with about 7 minutes devoted to the presentation itself, followed by a 3-minute Question & Answer session.
 
-## Website
-The actual website can be viewed at the [following link](https://aelisker.github.io/weather-dashboard/). The code repository can be found at [here](https://github.com/aelisker/weather-dashboard/).
+Elevator pitch: A one-minute description of your application.
+Concept: What is your user story? What was your motivation for development?
+Process: What were the technologies used? How were tasks and roles broken down and assigned? What challenges did you encounter? What were your successes?
+Demo: Show your stuff!
+Directions for future development.
+Links to the deployed application and the GitHub repository.
 
-You can also find a screenshot of the website below:
-![weather-dashboard-gif](./assets/images/wd.gif)
+Use this Presentation Template: https://docs.google.com/presentation/d/1_u8TKy5zW5UlrVQVnyDEZ0unGI2tjQPDEpA0FNuBKAw/edit#slide=id.g29f43f0a72_0_0
