@@ -80,30 +80,31 @@ var renderToPage = function() {
   }
 };
 
-var switchView = function() {
+var contentView = function() {
   var contentEl = document.querySelector("#content");
   var watchlistEl = document.querySelector("#watchlist");
 
-  if (searchView.classList.contains('primary')) {
-    searchView.classList = 'clear button';
-    watchlistView.classList = 'primary button';
-    contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
-    watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
+  searchViewBtn.classList = 'primary button';
+  watchlistViewBtn.classList = 'clear button';
+  contentEl.classList = 'cell medium-auto medium-cell-block-container';
+  watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
+};
 
-  }
-  else {
-    searchView.classList = 'primary button';
-    watchlistView.classList = 'clear button';
-    contentEl.classList = 'cell medium-auto medium-cell-block-container';
-    watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
-  }
+var watchlistView = function() {
+  var contentEl = document.querySelector("#content");
+  var watchlistEl = document.querySelector("#watchlist");
+
+  searchViewBtn.classList = 'clear button';
+  watchlistViewBtn.classList = 'primary button';
+  contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
+  watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
 };
 
 var searchButton = document.querySelector("#search-btn");
 searchButton.addEventListener("click", createQuery);
 
-var searchView = document.querySelector("#search-view");
-searchView.addEventListener("click", switchView);
+var searchViewBtn = document.querySelector("#search-view");
+searchViewBtn.addEventListener("click", contentView);
 
-var watchlistView = document.querySelector("#watchlist-view");
-watchlistView.addEventListener("click", switchView);
+var watchlistViewBtn = document.querySelector("#watchlist-view");
+watchlistViewBtn.addEventListener("click", watchlistView);
