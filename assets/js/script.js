@@ -80,5 +80,30 @@ var renderToPage = function() {
   }
 };
 
+var switchView = function() {
+  var contentEl = document.querySelector("#content");
+  var watchlistEl = document.querySelector("#watchlist");
+
+  if (searchView.classList.contains('primary')) {
+    searchView.classList = 'clear button';
+    watchlistView.classList = 'primary button';
+    contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
+    watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
+
+  }
+  else {
+    searchView.classList = 'primary button';
+    watchlistView.classList = 'clear button';
+    contentEl.classList = 'cell medium-auto medium-cell-block-container';
+    watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
+  }
+};
+
 var searchButton = document.querySelector("#search-btn");
 searchButton.addEventListener("click", createQuery);
+
+var searchView = document.querySelector("#search-view");
+searchView.addEventListener("click", switchView);
+
+var watchlistView = document.querySelector("#watchlist-view");
+watchlistView.addEventListener("click", switchView);

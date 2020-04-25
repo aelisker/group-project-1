@@ -12,82 +12,84 @@
 <body>
   <div class="grid-y medium-grid-frame">
     <div class="cell shrink header medium-cell-block-container">
-      <h1 id="moviePickerTitle" class="grid-x grid-padding-x align-center alert">Movie Picker</h1>
-
-      <ul class="tabs" data-responsive-accordion-tabs="tabs medium-accordion large-tabs" id="example-tabs">
-        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Search View</a></li>
-        <li class="tabs-title"><a href="#panel2">Watchlist</a></li>
-      </ul>
-      
-      <div class="tabs-content" data-tabs-content="example-tabs">
-        <div class="tabs-panel is-active" id="panel1">
-          <div class="cell medium-auto medium-cell-block-container">
-            <div class="grid-x grid-padding-x">
-
-              <!-- Div for search input -->
-              <div class="cell medium-3 medium-cell-block-y">
-                <h4>Search Params</h4>
-                <div class="cell">
-                  <label>Movie or Television Series:</label>
-                  <select id="movieOrSeries">
-                    <option value="both">Both</option>
-                    <option value="movie">Movie</option>
-                    <option value="series">TV Series</option>
-                  </select>
-                </div>
-                <div class="cell">
-                  <label>Genre: NOT CURRENTLY WORKING</label>
-                  <select id="genre">
-                    <option value="1">Both</option>
-                    <option value="2">Movie</option>
-                    <option value="3">TV Series</option>
-                  </select>
-                </div>
-                <div class="cell">
-                  <label>Sort By:</label>
-                  <select id="sort">
-                    <option value="rating">Rating</option>
-                    <option value="date">Date</option>
-                    <option value="title">Title</option>
-                    <option value="runtime">Runtime</option>
-                  </select>
-                </div>
-
-
-                <form>
-                      <div data-role="rangeslider">
-                          <label for="range-1a">Starting Year and Ending Year:</label>
-                          <input type="range" name="range-1a" id="yearStart" min="1950" max="2020" value="1950">
-                          <label for="range-1b">Starting Year and Ending Year:</label>
-                          <input type="range" name="range-1b" id="yearEnd" min="1950" max="2020" value="2020">
-                      </div>
-                  </form>
-
-                  <form>
-                        <div data-role="rangeslider">
-                            <label for="range-10a">Minimum and Maximum IMDB Rating:</label>
-                            <input type="range" name="range-10a" id="ratingStart" min="0" max="10" step="1" value="0">
-                            <label for="range-10b">Minimum and Maximum IMDB Rating:</label>
-                            <input type="range" name="range-10b" id="ratingEnd" min="0" max="10" step="1" value="10">
-                        </div>
-                    </form>
-
-                    <a id="search-btn" class="button expanded" href="#">Search</a>
-              </div>
-
-              <!-- Content goes here -->
-              <div class="cell medium-9 medium-cell-block-y">
-                <h2>Content Goes Here</h2>
-              </div>
-            </div>
-          </div>
+      <h1>Movie Picker</h1>
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-6 align-center">
+          <a id="search-view" class="primary button" href="#">Search</a>
         </div>
-        <div class="tabs-panel" id="panel2">
-          <p>TESTER/p>
+        <div class="cell medium-6 align-center">
+          <a id="watchlist-view" class="clear button" href="#">Watchlist</a>
         </div>
       </div>
-      
+    </div>
+    <div id="content" class="cell medium-auto medium-cell-block-container">
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-4 medium-cell-block-y">
+          <h4>Search Params</h4>
+            <div class="cell">
+              <label>Movie or Series:</label>
+              <select id="movieOrSeries">
+                <option value="both">Both</option>
+                <option value="movie">Movie</option>
+                <option value="series">TV Series</option>
+              </select>
+            </div>
+            <div class="cell">
+              <label>Genre: NOT CURRENTLY WORKING</label>
+              <select id="genre">
+                <option value="1">Both</option>
+                <option value="2">Movie</option>
+                <option value="3">TV Series</option>
+              </select>
+            </div>
+            <div class="cell">
+              <label>Sort By:</label>
+              <select id="sort">
+                <option value="rating">Rating</option>
+                <option value="date">Date</option>
+                <option value="title">Title</option>
+                <option value="runtime">Runtime</option>
+              </select>
+            </div>
 
+
+            <form>
+                  <div data-role="rangeslider">
+                      <label for="range-1a">Starting Year and Ending Year:</label>
+                      <input type="range" name="range-1a" id="yearStart" min="1950" max="2020" value="1950">
+                      <label for="range-1b">Starting Year and Ending Year:</label>
+                      <input type="range" name="range-1b" id="yearEnd" min="1950" max="2020" value="2020">
+                  </div>
+              </form>
+
+              <form>
+                    <div data-role="rangeslider">
+                        <label for="range-10a">Minimum and Maximum IMDB Rating:</label>
+                        <input type="range" name="range-10a" id="ratingStart" min="0" max="10" step="1" value="0">
+                        <label for="range-10b">Minimum and Maximum IMDB Rating:</label>
+                        <input type="range" name="range-10b" id="ratingEnd" min="0" max="10" step="1" value="10">
+                    </div>
+                </form>
+
+                <a id="search-btn" class="button expanded" href="#">Search</a>
+        </div>
+        <div class="cell medium-8 medium-cell-block-y">
+          <h2>Content Goes Here</h2>
+        </div>
+      </div>
+    </div>
+    <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item A
+        </div>
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item B
+        </div>
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item C
+        </div>
+      </div>
     </div>
   </div>
 
