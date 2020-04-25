@@ -12,3 +12,7 @@ header {
   width: 100px;
   align-self: center;
 }
+
+#search-btn {
+  color: white;
+}
