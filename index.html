@@ -1,40 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Proof of Concept</title>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./assets/css/jquery.mobile-1.5.0-rc1.min.css" /> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
-  <div class="container">
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-      </div>
-    </nav>
-    <div class="row">
-
-      <div class="col s3">
-        <div class="input-field col s12">
-          <select id="movieOrSeries">
-            <option value="1">Both</option>
-            <option value="2">Movie</option>
-            <option value="3">TV Series</option>
-          </select>
-          <label>Movie or Television Series?</label>
+  <div class="grid-y medium-grid-frame">
+    <div class="cell shrink header medium-cell-block-container">
+      <h1>Movie Picker</h1>
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-6 align-center">
+          <a id="search-view" class="primary button" href="#">Search</a>
+        </div>
+        <div class="cell medium-6 align-center">
+          <a id="watchlist-view" class="clear button" href="#">Watchlist</a>
         </div>
       </div>
     </div>
-   
+    <div id="content" class="cell medium-auto medium-cell-block-container">
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-4 medium-cell-block-y">
+          <h4>Search Params</h4>
+            <div class="cell">
+              <label>Movie or Series:</label>
+              <select id="movieOrSeries">
+                <option value="both">Both</option>
+                <option value="movie">Movie</option>
+                <option value="series">TV Series</option>
+              </select>
+            </div>
+            <div class="cell">
+              <label>Genre: NOT CURRENTLY WORKING</label>
+              <select id="genre">
+                <option value="1">Both</option>
+                <option value="2">Movie</option>
+                <option value="3">TV Series</option>
+              </select>
+            </div>
+            <div class="cell">
+              <label>Sort By:</label>
+              <select id="sort">
+                <option value="rating">Rating</option>
+                <option value="date">Date</option>
+                <option value="title">Title</option>
+                <option value="runtime">Runtime</option>
+              </select>
+            </div>
+
+
+            <form>
+                  <div data-role="rangeslider">
+                      <label for="range-1a">Starting Year and Ending Year:</label>
+                      <input type="range" name="range-1a" id="yearStart" min="1950" max="2020" value="1950">
+                      <label for="range-1b">Starting Year and Ending Year:</label>
+                      <input type="range" name="range-1b" id="yearEnd" min="1950" max="2020" value="2020">
+                  </div>
+              </form>
+
+              <form>
+                    <div data-role="rangeslider">
+                        <label for="range-10a">Minimum and Maximum IMDB Rating:</label>
+                        <input type="range" name="range-10a" id="ratingStart" min="0" max="10" step="1" value="0">
+                        <label for="range-10b">Minimum and Maximum IMDB Rating:</label>
+                        <input type="range" name="range-10b" id="ratingEnd" min="0" max="10" step="1" value="10">
+                    </div>
+                </form>
+
+                <a id="search-btn" class="button expanded" href="#">Search</a>
+        </div>
+        <div class="cell medium-8 medium-cell-block-y">
+          <h2>Content Goes Here</h2>
+        </div>
+      </div>
+    </div>
+    <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
+      <div class="grid-x grid-padding-x">
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item A
+        </div>
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item B
+        </div>
+        <div class="cell medium-4 medium-cell-block-y">
+          Watchlist Item C
+        </div>
+      </div>
+    </div>
   </div>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script src="./assets/js/jquery.mobile-1.5.0-rc1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
   <script src="./assets/js/api.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
