@@ -8,6 +8,9 @@ var watchlistViewBtn = document.querySelector("#watchlist-view");
 var searchViewBtn = document.querySelector("#search-view");
 
 var currentQuery = '';
+var contentEl = document.querySelector("#content");
+var watchlistEl = document.querySelector("#watchlist");
+
 
 var createQuery = function() {
   //clear out contents of previous query
@@ -153,15 +156,25 @@ var renderToPage = function() {
 };
 
 var contentView = function() {
+<<<<<<< HEAD
   searchViewBtn.classList = 'primary button';
   watchlistViewBtn.classList = 'clear button';
+=======
+  searchViewBtn.classList = 'active-button primary button float-center';
+  watchlistViewBtn.classList = 'nonactive-button clear button float-center';
+>>>>>>> 9c8c4032469036783b4c08f2192061df0dca6d8c
   contentEl.classList = 'cell medium-auto medium-cell-block-container';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
 };
 
 var watchlistView = function() {
+<<<<<<< HEAD
   searchViewBtn.classList = 'clear button';
   watchlistViewBtn.classList = 'primary button';
+=======
+  searchViewBtn.classList = 'nonactive-button clear button float-center';
+  watchlistViewBtn.classList = 'active-button primary button float-center';
+>>>>>>> 9c8c4032469036783b4c08f2192061df0dca6d8c
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
 };
