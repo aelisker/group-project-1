@@ -146,6 +146,7 @@ var renderToPage = function() {
     watchlistBtnEl.classList = 'button expanded watch';
     watchlistBtnEl.textContent = 'Add to Watchlist';
     watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
+    watchlistBtnEl.setAttribute('data-index', i);
 
     cardBody.appendChild(watchlistBtnEl);
 
@@ -176,7 +177,8 @@ var contentClickHandler = function(event) {
 
   if (targetEl.matches(".watch")) {
     var contentId = targetEl.getAttribute("data-nfid");
-    console.log(contentId);
+    var contentIndex = targetEl.getAttribute("data-index");
+    console.log(contentId + ', ' + contentIndex);
   }
 };
 
