@@ -30,13 +30,47 @@ var createQuery = function() {
   var sortBy = document.querySelector("#sort").value;
   var sortByQuery = '&orderby=' + sortBy;
 
+  //get genre and feed in Netflix genre IDs
+  var genre = document.querySelector("#genre").value;
+  if (genre === 'action') {
+    var genreQuery = '&genrelist=90176,77232,43048,1568,43040,10673,1365,801362,7442,2125';
+  }
+  else if (genre === 'animated') {
+    var genreQuery = '&genrelist=7992,9302,2867325,2316199,1819777,7424,4698,11881,2653';
+  }
+  else if (genre === 'comedy') {
+    var genreQuery = '&genrelist=77230,11559,1516534,11039,89585,77599,10375,78163,10778,6548,5286,43040,31694,9434,869,1402,4195';
+  }
+  else if (genre === 'documentary') {
+    var genreQuery = '&genrelist=48768,49547,2595,17672,28269,3652,56178,26126,8673,6839,2243108,10105,9875';
+  }
+  else if (genre === 'drama') {
+    var genreQuery = '&genrelist=11075,3179,3682,52148,56169,29809,89804,384,2150,500,5763,4961,3653,6889,528582748,11,6616,7243,9299,11714';
+  }
+  else if (genre === 'horror') {
+    var genreQuery = '&genrelist=10750,1475312,83059,8711,89585,9509,45028,10944,48303,8195,83059,75804,75405';
+  }
+  else if (genre === 'romance') {
+    var genreQuery = '&genrelist=26156,29281,53915,36103,31273,5475,1255,502675,7153,9916,8883';
+  }
+  else if (genre === 'scifi') {
+    var genreQuery = '&genrelist=852491,1626246,52849,4734,47147,90166,3327,1568,1492,6926,3916,1694,11014,1372';
+  }
+  else if (genre === 'thriller') {
+    var genreQuery = '&genrelist=11014,43048,46588,10499,10306,3269,10504,5505,9147,972,11140,8933';
+  }
+  else {
+    var genreQuery = '';
+  }
+
   var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=25&subtitle=english&countrylist=78&audio=english&offset=0" + 
     seriesOrMovieQuery + 
     sortByQuery +
     startYearQuery + 
     endYearQuery + 
     startratingQuery + 
-    endRatingQuery;
+    endRatingQuery + 
+    genreQuery;
 
   netflixQuery(netflixQueryUrl);
 };

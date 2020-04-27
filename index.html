@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Proof of Concept</title>
+  <title>Netflix Movie Picker</title>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="./assets/css/jquery.mobile-1.5.0-rc1.min.css" /> 
@@ -12,20 +12,20 @@
 <body>
   <div class="grid-y medium-grid-frame">
     <div class="cell shrink header medium-cell-block-container">
-      <h1>Movie Picker</h1>
+      <h1>Netflix Movie Picker</h1>
       <div class="grid-x grid-padding-x">
         <div class="cell medium-6 align-center">
-          <a id="search-view" class="primary button" href="#">Search</a>
+          <a id="search-view" class="primary button" href="#">Search View</a>
         </div>
         <div class="cell medium-6 align-center">
-          <a id="watchlist-view" class="clear button" href="#">Watchlist</a>
+          <a id="watchlist-view" class="clear button" href="#">Watchlist View</a>
         </div>
       </div>
     </div>
     <div id="content" class="cell medium-auto medium-cell-block-container">
       <div class="grid-x grid-padding-x">
         <div class="cell medium-4 medium-cell-block-y">
-          <h4>Search Params</h4>
+          <!-- <h4>Search Params</h4> -->
             <div class="cell">
               <label>Movie or Series:</label>
               <select id="movieOrSeries">
@@ -35,11 +35,18 @@
               </select>
             </div>
             <div class="cell">
-              <label>Genre: NOT CURRENTLY WORKING</label>
+              <label>Genre:</label>
               <select id="genre">
-                <option value="1">Both</option>
-                <option value="2">Movie</option>
-                <option value="3">TV Series</option>
+                <option value="any">Any</option>
+                <option value="action">Action</option>
+                <option value="animated">Animated</option>
+                <option value="comedy">Comedy</option>
+                <option value="documentary">Documentary</option>
+                <option value="drama">Drama</option>
+                <option value="horror">Horror</option>
+                <option value="romance">Romance</option>
+                <option value="scifi">Sci-Fi</option>
+                <option value="thriller">Thriller</option>
               </select>
             </div>
             <div class="cell">
