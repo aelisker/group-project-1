@@ -1,6 +1,9 @@
 $(document).foundation();
 
 var currentQuery = '';
+var contentEl = document.querySelector("#content");
+var watchlistEl = document.querySelector("#watchlist");
+
 
 var createQuery = function() {
   //get value of movie or series, if both, do not pass in any value per API doc
@@ -115,21 +118,15 @@ var renderToPage = function() {
 };
 
 var contentView = function() {
-  var contentEl = document.querySelector("#content");
-  var watchlistEl = document.querySelector("#watchlist");
-
-  searchViewBtn.classList = 'primary button';
-  watchlistViewBtn.classList = 'clear button';
+  searchViewBtn.classList = 'active-button primary button float-center';
+  watchlistViewBtn.classList = 'nonactive-button clear button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
 };
 
 var watchlistView = function() {
-  var contentEl = document.querySelector("#content");
-  var watchlistEl = document.querySelector("#watchlist");
-
-  searchViewBtn.classList = 'clear button';
-  watchlistViewBtn.classList = 'primary button';
+  searchViewBtn.classList = 'nonactive-button clear button float-center';
+  watchlistViewBtn.classList = 'active-button primary button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
 };

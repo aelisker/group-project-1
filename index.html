@@ -11,16 +11,18 @@
 </head>
 <body>
   <div class="grid-y medium-grid-frame">
-    <div class="cell shrink header medium-cell-block-container">
-      <h1>Netflix Movie Picker</h1>
-      <div class="grid-x grid-padding-x">
-        <div class="cell medium-6 align-center">
-          <a id="search-view" class="primary button" href="#">Search View</a>
+    <div id="header-container" data-sticky-container>
+      <header class="cell shrink header medium-cell-block-container" class="sticky" data-sticky data-margin-top="0">
+        <h1 class =" float-center">Netflix Movie Picker</h1>
+        <div class="grid-x grid-padding-x">
+          <div class="cell medium-6 align-center">
+            <a id="search-view" class="active-button primary button float-center" href="#">Search View</a>
+          </div>
+          <div class="cell medium-6 align-center">
+            <a id="watchlist-view" class="nonactive-button clear button float-center" href="#">Watchlist View</a>
+          </div>
         </div>
-        <div class="cell medium-6 align-center">
-          <a id="watchlist-view" class="clear button" href="#">Watchlist View</a>
-        </div>
-      </div>
+      </header>
     </div>
     <div id="content" class="cell medium-auto medium-cell-block-container">
       <div class="grid-x grid-padding-x">

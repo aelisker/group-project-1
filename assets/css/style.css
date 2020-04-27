@@ -16,3 +16,24 @@ header {
 #search-btn {
   color: white;
 }
+
+#header-container {
+  background-color: 	#E50914;
+}
+
+h1 {
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.active-button {
+  color: white;
+  font-size: 19px;
+  text-shadow: 1px 2px #37474F;
+}
+
+.nonactive-button {
+  color: #EBEDEF;
+  font-size: 17px;
+  text-shadow: none; 
+}
