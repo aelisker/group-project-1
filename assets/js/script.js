@@ -1,8 +1,18 @@
 $(document).foundation();
 
+var contentEl = document.querySelector("#content");
+var watchlistEl = document.querySelector("#watchlist");
+var pageContentEl = document.querySelector("#pageContent");
+var searchButton = document.querySelector("#search-btn");
+var watchlistViewBtn = document.querySelector("#watchlist-view");
+var searchViewBtn = document.querySelector("#search-view");
+
 var currentQuery = '';
 
 var createQuery = function() {
+  //clear out contents of previous query
+  currentQuery = '';
+
   //get value of movie or series, if both, do not pass in any value per API doc
   var seriesOrMovie = document.querySelector("#movieOrSeries").value;
   if (seriesOrMovie === 'both') {
@@ -89,7 +99,7 @@ var netflixQuery = function(queryUrl) {
   })
   .then((data) => {
     currentQuery = data;
-    // renderToPage();
+    renderToPage();
     console.log(data);
   })
   .catch(err => {
@@ -98,26 +108,51 @@ var netflixQuery = function(queryUrl) {
 };
 
 var renderToPage = function() {
-  var carouselEl = document.querySelector("#contentCarousel");
+  var containerEl = document.querySelector("#card-container");
+  containerEl.innerHTML = '';
+
   for (var i = 0; i < currentQuery.results.length; i++) {
 
-    var carouselImg = document.createElement("img");
-    var carouselItem = document.createElement("a");
+    var cellContainer = document.createElement("div");
+    cellContainer.classList = 'cell';
 
-    carouselItem.className = 'carousel-item';
-    carouselItem.setAttribute('href', 'https://www.google.com');
+    var cardBody = document.createElement("div");
+    cardBody.classList = 'card';
 
-    carouselImg.setAttribute('src', currentQuery.results[i].poster);
+    var cardPoster = document.createElement("img");
+    cardPoster.setAttribute('src', currentQuery.results[i].poster);
 
-    carouselItem.appendChild(carouselImg);
-    carouselEl.appendChild(carouselItem);
+    var cardContent = document.createElement("div");
+    cardContent.classList = 'card-section';
+
+    var contentTitle = document.createElement("h4");
+    contentTitle.textContent = currentQuery.results[i].title;
+    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+
+    var contentSynopsis = document.createElement("p");
+    contentSynopsis.textContent = currentQuery.results[i].synopsis;
+    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
+
+    cardContent.appendChild(contentTitle);
+    cardContent.appendChild(contentSynopsis);
+
+    cardBody.appendChild(cardPoster);
+    cardBody.appendChild(cardContent);
+
+    var watchlistBtnEl = document.createElement("a");
+    watchlistBtnEl.classList = 'button expanded watch';
+    watchlistBtnEl.textContent = 'Add to Watchlist';
+    watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
+
+    cardBody.appendChild(watchlistBtnEl);
+
+    cellContainer.appendChild(cardBody);
+
+    containerEl.appendChild(cellContainer);
   }
 };
 
 var contentView = function() {
-  var contentEl = document.querySelector("#content");
-  var watchlistEl = document.querySelector("#watchlist");
-
   searchViewBtn.classList = 'primary button';
   watchlistViewBtn.classList = 'clear button';
   contentEl.classList = 'cell medium-auto medium-cell-block-container';
@@ -125,20 +160,24 @@ var contentView = function() {
 };
 
 var watchlistView = function() {
-  var contentEl = document.querySelector("#content");
-  var watchlistEl = document.querySelector("#watchlist");
-
   searchViewBtn.classList = 'clear button';
   watchlistViewBtn.classList = 'primary button';
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
 };
 
-var searchButton = document.querySelector("#search-btn");
+var contentClickHandler = function(event) {
+  event.preventDefault();
+
+  var targetEl = event.target;
+
+  if (targetEl.matches(".watch")) {
+    var contentId = targetEl.getAttribute("data-nfid");
+    console.log(contentId);
+  }
+};
+
+pageContentEl.addEventListener("click", contentClickHandler);
 searchButton.addEventListener("click", createQuery);
-
-var searchViewBtn = document.querySelector("#search-view");
 searchViewBtn.addEventListener("click", contentView);
-
-var watchlistViewBtn = document.querySelector("#watchlist-view");
 watchlistViewBtn.addEventListener("click", watchlistView);
