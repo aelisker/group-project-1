@@ -8,6 +8,7 @@ var pageContentEl = document.querySelector("#pageContent");
 var searchButton = document.querySelector("#search-btn");
 var watchlistViewBtn = document.querySelector("#watchlist-view");
 var searchViewBtn = document.querySelector("#search-view");
+var containerEl = document.querySelector("#card-container");
 
 var currentQuery = '';
 var savedToWatchlist = [];
@@ -111,7 +112,6 @@ var netflixQuery = function(queryUrl) {
 };
 
 var renderToPage = function() {
-  var containerEl = document.querySelector("#card-container");
   containerEl.innerHTML = '';
 
   for (var i = 0; i < currentQuery.results.length; i++) {
@@ -261,7 +261,17 @@ var contentClickHandler = function(event) {
       savedToWatchlist.splice(removalIndex, 1);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
+
+      //NEED TO GET THIS WORKING TO DYNAMICALLY UPDATE BUTTON
+      containerEl.querySelector('a[data-nfid="' + contentId + '"]').textContent = 'Remove from Watchlist';
       renderToWatchlist();
+    }
+
+    if (targetEl.textContent === 'Add to Watchlist') {
+      targetEl.textContent = 'Remove from Watchlist';
+    }
+    else if (targetEl.textContent === 'Remove from Watchlist') {
+      targetEl.textContent = 'Add to Watchlist';
     }
   }
 };
