@@ -86,6 +86,7 @@ var createQuery = function() {
     genreQuery;
 
   netflixQuery(netflixQueryUrl);
+  console.log(netflixQuery)
 };
 
 var netflixQuery = function(queryUrl) {
@@ -113,7 +114,7 @@ var netflixQuery = function(queryUrl) {
 var renderToPage = function() {
   var containerEl = document.querySelector("#card-container");
   containerEl.innerHTML = '';
-
+  console.log(currentQuery);
   for (var i = 0; i < currentQuery.results.length; i++) {
 
     var cellContainer = document.createElement("div");
