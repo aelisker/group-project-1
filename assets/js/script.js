@@ -124,6 +124,10 @@ var renderToPage = function() {
 
     var cardPoster = document.createElement("img");
     cardPoster.setAttribute('src', currentQuery.results[i].poster);
+    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+    $(cardPoster).on("error", function() {
+      $(this).attr('src', './assets/img/300x420.png');
+    });
 
     var cardContent = document.createElement("div");
     cardContent.classList = 'card-section';
