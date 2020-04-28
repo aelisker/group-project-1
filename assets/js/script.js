@@ -1,11 +1,22 @@
+//initialize foundation elements
 $(document).foundation();
 
-var currentQuery = '';
+//declare global variable
 var contentEl = document.querySelector("#content");
 var watchlistEl = document.querySelector("#watchlist");
+var pageContentEl = document.querySelector("#pageContent");
+var searchButton = document.querySelector("#search-btn");
+var watchlistViewBtn = document.querySelector("#watchlist-view");
+var searchViewBtn = document.querySelector("#search-view");
+var containerEl = document.querySelector("#card-container");
 
+var currentQuery = '';
+var savedToWatchlist = [];
 
 var createQuery = function() {
+  //clear out contents of previous query
+  currentQuery = '';
+
   //get value of movie or series, if both, do not pass in any value per API doc
   var seriesOrMovie = document.querySelector("#movieOrSeries").value;
   if (seriesOrMovie === 'both') {
@@ -92,7 +103,7 @@ var netflixQuery = function(queryUrl) {
   })
   .then((data) => {
     currentQuery = data;
-    // renderToPage();
+    renderToPage();
     console.log(data);
   })
   .catch(err => {
@@ -101,19 +112,106 @@ var netflixQuery = function(queryUrl) {
 };
 
 var renderToPage = function() {
-  var carouselEl = document.querySelector("#contentCarousel");
+  containerEl.innerHTML = '';
+
   for (var i = 0; i < currentQuery.results.length; i++) {
 
-    var carouselImg = document.createElement("img");
-    var carouselItem = document.createElement("a");
+    var cellContainer = document.createElement("div");
+    cellContainer.classList = 'cell';
 
-    carouselItem.className = 'carousel-item';
-    carouselItem.setAttribute('href', 'https://www.google.com');
+    var cardBody = document.createElement("div");
+    cardBody.classList = 'card';
 
-    carouselImg.setAttribute('src', currentQuery.results[i].poster);
+    var cardPoster = document.createElement("img");
+    cardPoster.setAttribute('src', currentQuery.results[i].poster);
+    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+    $(cardPoster).on("error", function() {
+      $(this).attr('src', './assets/img/300x420.png');
+    });
 
-    carouselItem.appendChild(carouselImg);
-    carouselEl.appendChild(carouselItem);
+    var cardContent = document.createElement("div");
+    cardContent.classList = 'card-section';
+
+    var contentTitle = document.createElement("h4");
+    contentTitle.textContent = currentQuery.results[i].title;
+    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+
+    var contentSynopsis = document.createElement("p");
+    contentSynopsis.textContent = currentQuery.results[i].synopsis;
+    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
+
+    cardContent.appendChild(contentTitle);
+    cardContent.appendChild(contentSynopsis);
+
+    cardBody.appendChild(cardPoster);
+    cardBody.appendChild(cardContent);
+
+    var watchlistBtnEl = document.createElement("a");
+    watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
+    watchlistBtnEl.setAttribute('data-index', i);
+    watchlistBtnEl.classList = 'button expanded watch';
+
+    //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+    if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
+      watchlistBtnEl.textContent = 'Remove from Watchlist';
+    }
+    else {
+      watchlistBtnEl.textContent = 'Add to Watchlist';
+    }
+    
+    cardBody.appendChild(watchlistBtnEl);
+    cellContainer.appendChild(cardBody);
+    containerEl.appendChild(cellContainer);
+  }
+};
+
+var renderToWatchlist = function() {
+  var watchlistEl = document.querySelector("#watchlist-content");
+  watchlistEl.innerHTML = '';
+
+  for (var i = 0; i < savedToWatchlist.length; i++) {
+
+    var cellContainer = document.createElement("div");
+    cellContainer.classList = 'cell';
+
+    var cardBody = document.createElement("div");
+    cardBody.classList = 'card';
+
+    var cardPoster = document.createElement("img");
+    cardPoster.setAttribute('src', savedToWatchlist[i].poster);
+    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+    $(cardPoster).on("error", function() {
+      $(this).attr('src', './assets/img/300x420.png');
+    });
+
+    var cardContent = document.createElement("div");
+    cardContent.classList = 'card-section';
+
+    var contentTitle = document.createElement("h4");
+    contentTitle.textContent = savedToWatchlist[i].title;
+    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+
+    var contentSynopsis = document.createElement("p");
+    contentSynopsis.textContent = savedToWatchlist[i].synopsis;
+    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
+
+    cardContent.appendChild(contentTitle);
+    cardContent.appendChild(contentSynopsis);
+
+    cardBody.appendChild(cardPoster);
+    cardBody.appendChild(cardContent);
+
+    var watchlistBtnEl = document.createElement("a");
+    watchlistBtnEl.classList = 'button expanded watch';
+    watchlistBtnEl.textContent = 'Remove from Watchlist';
+    watchlistBtnEl.setAttribute('data-nfid', savedToWatchlist[i].nfid);
+    watchlistBtnEl.setAttribute('data-index', i);
+
+    cardBody.appendChild(watchlistBtnEl);
+
+    cellContainer.appendChild(cardBody);
+
+    watchlistEl.appendChild(cellContainer);
   }
 };
 
@@ -125,17 +223,71 @@ var contentView = function() {
 };
 
 var watchlistView = function() {
+  renderToWatchlist();
   searchViewBtn.classList = 'nonactive-button clear button float-center';
   watchlistViewBtn.classList = 'active-button primary button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
 };
 
-var searchButton = document.querySelector("#search-btn");
+var contentClickHandler = function(event) {
+  event.preventDefault();
+
+  var targetEl = event.target;
+
+  if (targetEl.matches(".watch")) {
+    var contentId = targetEl.getAttribute("data-nfid");
+    var contentIndex = targetEl.getAttribute("data-index");
+ 
+    var saveToStorage = true;
+    var removalIndex;
+
+    //declare var false if array already contains title
+    for (var i = 0; i < savedToWatchlist.length; i++) {
+      if (savedToWatchlist[i].nfid === parseInt(contentId)) {
+        saveToStorage = false;
+        removalIndex = i;
+        break;
+      }
+    }
+
+    if (saveToStorage) {
+      savedToWatchlist.push(currentQuery.results[contentIndex]);
+      var resultForLocalstorage = JSON.stringify(savedToWatchlist);
+      localStorage.setItem('watchlist', resultForLocalstorage);
+    }
+
+    if (!saveToStorage) {
+      savedToWatchlist.splice(removalIndex, 1);
+      var resultForLocalstorage = JSON.stringify(savedToWatchlist);
+      localStorage.setItem('watchlist', resultForLocalstorage);
+
+      //NEED TO GET THIS WORKING TO DYNAMICALLY UPDATE BUTTON
+      containerEl.querySelector('a[data-nfid="' + contentId + '"]').textContent = 'Remove from Watchlist';
+      renderToWatchlist();
+    }
+
+    if (targetEl.textContent === 'Add to Watchlist') {
+      targetEl.textContent = 'Remove from Watchlist';
+    }
+    else if (targetEl.textContent === 'Remove from Watchlist') {
+      targetEl.textContent = 'Add to Watchlist';
+    }
+  }
+};
+
+var loadSavedWatchlist = function() {
+  savedToWatchlist = JSON.parse(localStorage.getItem("watchlist"));
+  
+  //initialize empty array if nothing in localstorage
+  if (!savedToWatchlist) {
+    savedToWatchlist = [];
+  }
+};
+
+pageContentEl.addEventListener("click", contentClickHandler);
 searchButton.addEventListener("click", createQuery);
-
-var searchViewBtn = document.querySelector("#search-view");
 searchViewBtn.addEventListener("click", contentView);
-
-var watchlistViewBtn = document.querySelector("#watchlist-view");
 watchlistViewBtn.addEventListener("click", watchlistView);
+
+loadSavedWatchlist();
