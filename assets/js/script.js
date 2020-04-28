@@ -251,6 +251,22 @@ var contentClickHandler = function(event) {
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
     }
+
+    if (!saveToStorage) {
+      savedToWatchlist.splice(contentIndex, 1);
+      var resultForLocalstorage = JSON.stringify(savedToWatchlist);
+      localStorage.setItem('watchlist', resultForLocalstorage);
+      renderToWatchlist();
+    }
+  }
+};
+
+var loadSavedWatchlist = function() {
+  savedToWatchlist = JSON.parse(localStorage.getItem("watchlist"));
+  
+  //initialize empty array if nothing in localstorage
+  if (!savedToWatchlist) {
+    savedToWatchlist = [];
   }
 };
 
@@ -258,3 +274,5 @@ pageContentEl.addEventListener("click", contentClickHandler);
 searchButton.addEventListener("click", createQuery);
 searchViewBtn.addEventListener("click", contentView);
 watchlistViewBtn.addEventListener("click", watchlistView);
+
+loadSavedWatchlist();
