@@ -1,5 +1,7 @@
+//initialize foundation elements
 $(document).foundation();
 
+//declare global variable
 var contentEl = document.querySelector("#content");
 var watchlistEl = document.querySelector("#watchlist");
 var pageContentEl = document.querySelector("#pageContent");
@@ -9,10 +11,6 @@ var searchViewBtn = document.querySelector("#search-view");
 
 var currentQuery = '';
 var savedToWatchlist = [];
-
-var contentEl = document.querySelector("#content");
-var watchlistEl = document.querySelector("#watchlist");
-
 
 var createQuery = function() {
   //clear out contents of previous query
@@ -149,15 +147,20 @@ var renderToPage = function() {
     cardBody.appendChild(cardContent);
 
     var watchlistBtnEl = document.createElement("a");
-    watchlistBtnEl.classList = 'button expanded watch';
-    watchlistBtnEl.textContent = 'Add to Watchlist';
     watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
     watchlistBtnEl.setAttribute('data-index', i);
+    watchlistBtnEl.classList = 'button expanded watch';
 
+    //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+    if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
+      watchlistBtnEl.textContent = 'Remove from Watchlist';
+    }
+    else {
+      watchlistBtnEl.textContent = 'Add to Watchlist';
+    }
+    
     cardBody.appendChild(watchlistBtnEl);
-
     cellContainer.appendChild(cardBody);
-
     containerEl.appendChild(cellContainer);
   }
 };
@@ -237,11 +240,13 @@ var contentClickHandler = function(event) {
     var contentIndex = targetEl.getAttribute("data-index");
  
     var saveToStorage = true;
+    var removalIndex;
 
     //declare var false if array already contains title
     for (var i = 0; i < savedToWatchlist.length; i++) {
       if (savedToWatchlist[i].nfid === parseInt(contentId)) {
         saveToStorage = false;
+        removalIndex = i;
         break;
       }
     }
@@ -253,7 +258,7 @@ var contentClickHandler = function(event) {
     }
 
     if (!saveToStorage) {
-      savedToWatchlist.splice(contentIndex, 1);
+      savedToWatchlist.splice(removalIndex, 1);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
       renderToWatchlist();
