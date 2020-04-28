@@ -4,6 +4,15 @@ html, body, .fill, .search-col {
   height: 100%; */
 }
 
+body {
+  background-color: #E50914;
+}
+
+#content,
+#watchlist {
+  background-color: #E50914;
+}
+
 header {
   padding: 5px 0;
 }
@@ -22,6 +31,7 @@ header {
 }
 
 h1 {
+  text-align: center;
   color: white;
   text-shadow: 2px 2px black;
 }
@@ -37,3 +47,19 @@ h1 {
   font-size: 17px;
   text-shadow: none; 
 }
+
+label,
+h2 {
+  color: white;
+  text-shadow: 1px 1px #37474F;
+}
+
+.slider-label {
+  text-align: center;
+}
+
+p {
+  color: #788F9B;
+  text-shadow: 1px 1px #37474F;
+}
+

@@ -14,13 +14,13 @@
 
     <!-- header section -->
     <div id="header-container" data-sticky-container>
-      <header class="cell shrink header medium-cell-block-container" class="sticky" data-sticky data-margin-top="0">
-        <h1 class =" float-center">Netflix Movie Picker</h1>
+      <header class="cell header medium-cell-block-container sticky" data-sticky data-margin-top="0">
+        <h1 class ="float-center">Netflix Movie Picker</h1>
         <div class="grid-x grid-padding-x">
-          <div class="cell medium-6 align-center">
+          <div class="cell small-6 align-center">
             <a id="search-view" class="active-button primary button float-center" href="#">Search View</a>
           </div>
-          <div class="cell medium-6 align-center">
+          <div class="cell small-6 align-center">
             <a id="watchlist-view" class="nonactive-button clear button float-center" href="#">Watchlist View</a>
           </div>
         </div>
@@ -31,9 +31,9 @@
     <!-- searchview content block including search param area and rendered results -->
     <div id="content" class="cell medium-auto medium-cell-block-container">
       <div class="grid-x grid-padding-x">
-        <div class="cell medium-4 medium-cell-block-y">
+        <div class="cell medium-4 grid-x">
           <!-- <h4>Search Params</h4> -->
-            <div class="cell">
+            <div class="cell small-4 medium-12">
               <label>Movie or Series:</label>
               <select id="movieOrSeries">
                 <option value="both">Both</option>
@@ -41,7 +41,7 @@
                 <option value="series">TV Series</option>
               </select>
             </div>
-            <div class="cell">
+            <div class="cell small-4 medium-12">
               <label>Genre:</label>
               <select id="genre">
                 <option value="any">Any</option>
@@ -56,7 +56,7 @@
                 <option value="thriller">Thriller</option>
               </select>
             </div>
-            <div class="cell">
+            <div class="cell small-4 medium-12">
               <label>Sort By:</label>
               <select id="sort">
                 <option value="rating">Rating</option>
@@ -66,20 +66,20 @@
               </select>
             </div>
 
-            <form>
+            <form class="cell">
                   <div data-role="rangeslider">
-                      <label for="range-1a">Starting Year and Ending Year:</label>
+                      <label class="slider-label" for="range-1a">Starting Year and Ending Year:</label>
                       <input type="range" name="range-1a" id="yearStart" min="1950" max="2020" value="1950">
-                      <label for="range-1b">Starting Year and Ending Year:</label>
+                      <label class="slider-label" for="range-1b">Starting Year and Ending Year:</label>
                       <input type="range" name="range-1b" id="yearEnd" min="1950" max="2020" value="2020">
                   </div>
               </form>
 
-              <form>
+              <form class="cell">
                     <div data-role="rangeslider">
-                        <label for="range-10a">Minimum and Maximum IMDB Rating:</label>
+                        <label class="slider-label" for="range-10a">Minimum and Maximum IMDB Rating:</label>
                         <input type="range" name="range-10a" id="ratingStart" min="0" max="10" step="1" value="0">
-                        <label for="range-10b">Minimum and Maximum IMDB Rating:</label>
+                        <label class="slider-label" for="range-10b">Minimum and Maximum IMDB Rating:</label>
                         <input type="range" name="range-10b" id="ratingEnd" min="0" max="10" step="1" value="10">
                     </div>
                 </form>
@@ -92,10 +92,10 @@
         <div class="cell medium-8 medium-cell-block-y">
             <h2>Your Results:</h2>
   
-          <div id="card-container" class="grid-x grid-margin-x small-up-2 medium-up-3">
+          <div id="card-container" class="grid-x grid-margin-x small-up-1 medium-up-3">
             <div class="cell">
               <div class="card-divider">
-                <h3 class="text-center"><span id="movie1">Movie Name</span></h3>
+                <h3><span id="movie1">Movie Name</span></h3>
               </div>
               <div class="card-image">
                 <img src="http://placehold.it/300x500">
