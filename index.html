@@ -11,6 +11,8 @@
 </head>
 <body>
   <div id="pageContent" class="grid-y medium-grid-frame">
+
+    <!-- header section -->
     <div id="header-container" data-sticky-container>
       <header class="cell shrink header medium-cell-block-container" class="sticky" data-sticky data-margin-top="0">
         <h1 class =" float-center">Netflix Movie Picker</h1>
@@ -24,6 +26,9 @@
         </div>
       </header>
     </div>
+    <!-- end header section -->
+
+    <!-- searchview content block including search param area and rendered results -->
     <div id="content" class="cell medium-auto medium-cell-block-container">
       <div class="grid-x grid-padding-x">
         <div class="cell medium-4 medium-cell-block-y">
@@ -61,7 +66,6 @@
               </select>
             </div>
 
-
             <form>
                   <div data-role="rangeslider">
                       <label for="range-1a">Starting Year and Ending Year:</label>
@@ -82,6 +86,9 @@
 
                 <a id="search-btn" class="button expanded" href="#">Search</a>
         </div>
+        <!-- end search params -->
+
+        <!-- render content to page block -->
         <div class="cell medium-8 medium-cell-block-y">
             <h2>Your Results:</h2>
   
@@ -137,19 +144,18 @@
               </div>
             </div>
         </div>
-      </div>
+        </div>
+        <!-- end render content to page block -->
+      </div>  
     </div>
+    <!-- end searchview content block including search param area and rendered results -->
+
+    <!-- area to render watchlist content -->
     <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
       <div class="grid-x grid-padding-x">
-        <div class="cell medium-4 medium-cell-block-y">
-          Watchlist Item A
-        </div>
-        <div class="cell medium-4 medium-cell-block-y">
-          Watchlist Item B
-        </div>
-        <div class="cell medium-4 medium-cell-block-y">
-          Watchlist Item C
-        </div>
+      <div id="watchlist-content" class="grid-x grid-padding-x grid-margin-x small-up-2 large-up-5 medium-up-3 medium-cell-block-y">
+        <!-- render watchlist here -->
+      </div>
       </div>
     </div>
   </div>

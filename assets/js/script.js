@@ -8,6 +8,8 @@ var watchlistViewBtn = document.querySelector("#watchlist-view");
 var searchViewBtn = document.querySelector("#search-view");
 
 var currentQuery = '';
+var savedToWatchlist = [];
+
 var contentEl = document.querySelector("#content");
 var watchlistEl = document.querySelector("#watchlist");
 
@@ -160,6 +162,56 @@ var renderToPage = function() {
   }
 };
 
+var renderToWatchlist = function() {
+  var watchlistEl = document.querySelector("#watchlist-content");
+  watchlistEl.innerHTML = '';
+
+  for (var i = 0; i < savedToWatchlist.length; i++) {
+
+    var cellContainer = document.createElement("div");
+    cellContainer.classList = 'cell';
+
+    var cardBody = document.createElement("div");
+    cardBody.classList = 'card';
+
+    var cardPoster = document.createElement("img");
+    cardPoster.setAttribute('src', savedToWatchlist[i].poster);
+    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+    $(cardPoster).on("error", function() {
+      $(this).attr('src', './assets/img/300x420.png');
+    });
+
+    var cardContent = document.createElement("div");
+    cardContent.classList = 'card-section';
+
+    var contentTitle = document.createElement("h4");
+    contentTitle.textContent = savedToWatchlist[i].title;
+    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+
+    var contentSynopsis = document.createElement("p");
+    contentSynopsis.textContent = savedToWatchlist[i].synopsis;
+    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
+
+    cardContent.appendChild(contentTitle);
+    cardContent.appendChild(contentSynopsis);
+
+    cardBody.appendChild(cardPoster);
+    cardBody.appendChild(cardContent);
+
+    var watchlistBtnEl = document.createElement("a");
+    watchlistBtnEl.classList = 'button expanded watch';
+    watchlistBtnEl.textContent = 'Remove from Watchlist';
+    watchlistBtnEl.setAttribute('data-nfid', savedToWatchlist[i].nfid);
+    watchlistBtnEl.setAttribute('data-index', i);
+
+    cardBody.appendChild(watchlistBtnEl);
+
+    cellContainer.appendChild(cardBody);
+
+    watchlistEl.appendChild(cellContainer);
+  }
+};
+
 var contentView = function() {
   searchViewBtn.classList = 'active-button primary button float-center';
   watchlistViewBtn.classList = 'nonactive-button clear button float-center';
@@ -168,6 +220,7 @@ var contentView = function() {
 };
 
 var watchlistView = function() {
+  renderToWatchlist();
   searchViewBtn.classList = 'nonactive-button clear button float-center';
   watchlistViewBtn.classList = 'active-button primary button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
@@ -182,7 +235,22 @@ var contentClickHandler = function(event) {
   if (targetEl.matches(".watch")) {
     var contentId = targetEl.getAttribute("data-nfid");
     var contentIndex = targetEl.getAttribute("data-index");
-    console.log(contentId + ', ' + contentIndex);
+ 
+    var saveToStorage = true;
+
+    //declare var false if array already contains title
+    for (var i = 0; i < savedToWatchlist.length; i++) {
+      if (savedToWatchlist[i].nfid === parseInt(contentId)) {
+        saveToStorage = false;
+        break;
+      }
+    }
+
+    if (saveToStorage) {
+      savedToWatchlist.push(currentQuery.results[contentIndex]);
+      var resultForLocalstorage = JSON.stringify(savedToWatchlist);
+      localStorage.setItem('watchlist', resultForLocalstorage);
+    }
   }
 };
 
