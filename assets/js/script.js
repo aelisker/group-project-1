@@ -8,7 +8,7 @@ var pageContentEl = document.querySelector("#pageContent");
 var searchButton = document.querySelector("#search-btn");
 var watchlistViewBtn = document.querySelector("#watchlist-view");
 var searchViewBtn = document.querySelector("#search-view");
-var containerEl = document.querySelector("#card-container");
+var containerEl = document.querySelector("#content-container");
 
 var currentQuery = '';
 var savedToWatchlist = [];
@@ -118,6 +118,8 @@ var renderToPage = function() {
   //clear any previous searches
   containerEl.innerHTML = '';
 
+  var contentContainer = document.createElement("div");
+
   //get length of result array, print each result
   for (var i = 0; i < currentQuery.results.length; i++) {
 
@@ -126,6 +128,7 @@ var renderToPage = function() {
 
     var cardBody = document.createElement("div");
     cardBody.classList = 'card';
+    cardBody.setAttribute('data-equalizer-watch', '');
 
     var cardPoster = document.createElement("img");
     cardPoster.setAttribute('src', currentQuery.results[i].poster);
@@ -168,13 +171,23 @@ var renderToPage = function() {
     
     cardBody.appendChild(watchlistBtnEl);
     cellContainer.appendChild(cardBody);
-    containerEl.appendChild(cellContainer);
+
+    contentContainer.setAttribute('id', 'card-container');
+    contentContainer.setAttribute('data-equalizer','');
+    contentContainer.setAttribute('data-equalize-by-row', true);
+    contentContainer.classList = 'grid-x grid-margin-x small-up-1 medium-up-3';
+    
+    contentContainer.appendChild(cellContainer);
+    containerEl.appendChild(contentContainer);
   }
+  $(document).foundation();
 };
 
 var renderToWatchlist = function() {
-  var watchlistEl = document.querySelector("#watchlist-content");
-  watchlistEl.innerHTML = '';
+  var watchlistContainer = document.querySelector("#watchlist-container");
+  watchlistContainer.innerHTML = '';
+
+  var watchlistEl = document.createElement("div");
 
   for (var i = 0; i < savedToWatchlist.length; i++) {
 
@@ -183,6 +196,7 @@ var renderToWatchlist = function() {
 
     var cardBody = document.createElement("div");
     cardBody.classList = 'card';
+    cardBody.setAttribute('data-equalizer-watch', '');
 
     var cardPoster = document.createElement("img");
     cardPoster.setAttribute('src', savedToWatchlist[i].poster);
@@ -218,8 +232,15 @@ var renderToWatchlist = function() {
 
     cellContainer.appendChild(cardBody);
 
+    watchlistEl.classList = 'grid-x grid-padding-x grid-margin-x small-up-2 large-up-5 medium-up-3 medium-cell-block-y';
+    watchlistEl.setAttribute('id', 'watchlist-content');
+    watchlistEl.setAttribute('data-equalizer','');
+    watchlistEl.setAttribute('data-equalize-by-row', true);
     watchlistEl.appendChild(cellContainer);
+
+    watchlistContainer.appendChild(watchlistEl);
   }
+  $(document).foundation();
 };
 
 //when the search view button is clicked, hide content in watchlist and make sure search content is visible
@@ -228,15 +249,16 @@ var contentView = function() {
   watchlistViewBtn.classList = 'nonactive-button clear button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
+  renderToPage();
 };
 
 //when the watchlist button is clicked, hide content in search view and make sure watchlist is visible
 var watchlistView = function() {
-  renderToWatchlist();
   searchViewBtn.classList = 'nonactive-button clear button float-center';
   watchlistViewBtn.classList = 'active-button primary button float-center';
   contentEl.classList = 'cell medium-auto medium-cell-block-container hide';
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container';
+  renderToWatchlist();
 };
 
 var contentClickHandler = function(event) {
@@ -268,6 +290,7 @@ var contentClickHandler = function(event) {
       savedToWatchlist.push(currentQuery.results[contentIndex]);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
+      renderToPage();
     }
 
     //if save to storage var is false, find existing title in saved array with splice and value set at removal index, then save updated array to localstorage
@@ -275,9 +298,10 @@ var contentClickHandler = function(event) {
       savedToWatchlist.splice(removalIndex, 1);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
+      renderToPage();
 
       //NEED TO GET THIS WORKING TO DYNAMICALLY UPDATE BUTTON
-      containerEl.querySelector('a[data-nfid="' + contentId + '"]').textContent = 'Remove from Watchlist';
+      // containerEl.querySelector('a[data-nfid="' + contentId + '"]').textContent = 'Remove from Watchlist';
       renderToWatchlist();
     }
 
@@ -289,6 +313,7 @@ var contentClickHandler = function(event) {
       targetEl.textContent = 'Add to Watchlist';
     }
   }
+  $(document).foundation();
 };
 
 var loadSavedWatchlist = function() {
