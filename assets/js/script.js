@@ -142,6 +142,18 @@ var renderToPage = function() {
 
     var contentTitle = document.createElement("h4");
     contentTitle.textContent = currentQuery.results[i].title;
+
+    // have to limit the times pulled-too many query's will crash the page 
+    if (i < 5) {
+    NYTimesReview(currentQuery.results[i].title); 
+  }
+  
+    // stopped at figuring out how to display textContent("See the NY Times Review(s)");
+    // for today anyways. >_< *
+
+
+
+
     //look for instances of &#39; and replace with '
     contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
 
@@ -337,3 +349,21 @@ searchViewBtn.addEventListener("click", contentView);
 watchlistViewBtn.addEventListener("click", watchlistView);
 
 loadSavedWatchlist();
+
+// connection to ny times review search
+var NYTimesReview = function(movieName) {
+  var NYTQueryUrl = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=" + movieName +"&api-key=" + apiKey2;
+  fetch(NYTQueryUrl, {
+    "method": "GET"
+  })
+    .then(response => {
+      return response.json();
+  })
+    .then((data) => {
+      //save results to global array, render data to page after search
+      console.log(data);
+  })
+    .catch(err => {
+      console.log(err);
+  });  
+}
