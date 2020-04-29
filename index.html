@@ -11,207 +11,105 @@
 </head>
 <body>
   <div id="pageContent" class="grid-y medium-grid-frame">
-    <div id="header-container" data-sticky-container>
-      <header class="cell shrink header medium-cell-block-container" class="sticky" data-sticky data-margin-top="0">
-        <h1 class =" float-center">Netflix Movie Picker</h1>
+
+    <!-- header section -->
+    <div id="header-container">
+      <header class="cell header medium-cell-block-container" data-margin-top="0">
+        <h1 class ="float-center">Netflix Movie Picker</h1>
         <div class="grid-x grid-padding-x">
-          <div class="cell medium-6 align-center">
+          <div class="cell small-6 align-center">
             <a id="search-view" class="active-button primary button float-center" href="#">Search View</a>
           </div>
-          <div class="cell medium-6 align-center">
+          <div class="cell small-6 align-center">
             <a id="watchlist-view" class="nonactive-button clear button float-center" href="#">Watchlist View</a>
           </div>
         </div>
       </header>
     </div>
+    <!-- end header section -->
+
+    <!-- searchview content block including search param area and rendered results -->
     <div id="content" class="cell medium-auto medium-cell-block-container">
       <div class="grid-x grid-padding-x">
-        <div class="cell medium-3 medium-cell-block-y">
+        <div id="search-queries" class="cell medium-4 medium-cell-block-y">
           <!-- <h4>Search Params</h4> -->
-            <div class="cell">
-              <label>Movie or Series:</label>
-              <select id="movieOrSeries">
-                <option value="both">Both</option>
-                <option value="movie">Movie</option>
-                <option value="series">TV Series</option>
-              </select>
-            </div>
-            <div class="cell">
-              <label>Genre:</label>
-              <select id="genre">
-                <option value="any">Any</option>
-                <option value="action">Action</option>
-                <option value="animated">Animated</option>
-                <option value="comedy">Comedy</option>
-                <option value="documentary">Documentary</option>
-                <option value="drama">Drama</option>
-                <option value="horror">Horror</option>
-                <option value="romance">Romance</option>
-                <option value="scifi">Sci-Fi</option>
-                <option value="thriller">Thriller</option>
-              </select>
-            </div>
-            <div class="cell">
-              <label>Sort By:</label>
-              <select id="sort">
-                <option value="rating">Rating</option>
-                <option value="date">Date</option>
-                <option value="title">Title</option>
-                <option value="runtime">Runtime</option>
-              </select>
+            <div class="grid-x">
+              <div class="cell small-4 medium-12">
+                <label>Movie or Series:</label>
+                <select id="movieOrSeries">
+                  <option value="both">Both</option>
+                  <option value="movie">Movie</option>
+                  <option value="series">TV Series</option>
+                </select>
+              </div>
+              <div class="cell small-4 medium-12">
+                <label>Genre:</label>
+                <select id="genre">
+                  <option value="any">Any</option>
+                  <option value="action">Action</option>
+                  <option value="animated">Animated</option>
+                  <option value="comedy">Comedy</option>
+                  <option value="documentary">Documentary</option>
+                  <option value="drama">Drama</option>
+                  <option value="horror">Horror</option>
+                  <option value="romance">Romance</option>
+                  <option value="scifi">Sci-Fi</option>
+                  <option value="thriller">Thriller</option>
+                </select>
+              </div>
+              <div class="cell small-4 medium-12">
+                <label>Sort By:</label>
+                <select id="sort">
+                  <option value="rating">Rating</option>
+                  <option value="date">Date</option>
+                  <option value="title">Title</option>
+                  <option value="runtime">Runtime</option>
+                </select>
+              </div>
             </div>
 
-
-            <form>
+            <form class="cell">
                   <div data-role="rangeslider">
-                      <label for="range-1a">Starting Year and Ending Year:</label>
+                      <label class="slider-label" for="range-1a">Starting Year and Ending Year:</label>
                       <input type="range" name="range-1a" id="yearStart" min="1950" max="2020" value="1950">
-                      <label for="range-1b">Starting Year and Ending Year:</label>
+                      <label class="slider-label" for="range-1b">Starting Year and Ending Year:</label>
                       <input type="range" name="range-1b" id="yearEnd" min="1950" max="2020" value="2020">
                   </div>
               </form>
 
-              <form>
+              <form class="cell">
                     <div data-role="rangeslider">
-                        <label for="range-10a">Minimum and Maximum IMDB Rating:</label>
+                        <label class="slider-label" for="range-10a">Minimum and Maximum IMDB Rating:</label>
                         <input type="range" name="range-10a" id="ratingStart" min="0" max="10" step="1" value="0">
-                        <label for="range-10b">Minimum and Maximum IMDB Rating:</label>
+                        <label class="slider-label" for="range-10b">Minimum and Maximum IMDB Rating:</label>
                         <input type="range" name="range-10b" id="ratingEnd" min="0" max="10" step="1" value="10">
                     </div>
                 </form>
 
                 <a id="search-btn" class="button expanded" href="#">Search</a>
         </div>
+        <!-- end search params -->
+
+        <!-- block for rendering content to page -->
         <div class="cell medium-8 medium-cell-block-y">
             <h2>Your Results:</h2>
-  
-          <div class="grid-x grid-margin-x small-up-2 medium-up-3">
-            <div class="cell">
-              <div class="card-divider">
-                <h3 class="text-center"><span id="movie1">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie1-img" class="movieImg" src="" alt=""></span> -->
-              </div>
-              <div class="card-section">
-                <button class="button small"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie2-year"></span></h3>
-                <p>NY Times Review: <span id="movie2-review"></span><p>
-              </div>
-            </div>
-  
-            <div class="cell">
-              <div class="card-divider">
-                <h3><span id="movie2">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie2-img" class="movieImg" src="" alt=""></span> -->
-              </div>              
-              <div class="card-section">
-                <button class="button small"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie2-year"></span></h3>
-                <p>NY Times Review: <span id="movie2-review"></span><p>
-              </div>
-            </div>
-  
-            <div class="cell">
-              <div class="card-divider">
-                <h3><span id="movie3">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie3-img" class="movieImg" src="" alt=""></span> -->
-              </div>
-              <div class="card-section">
-                <button class="button small"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie3-year"></span></h3>
-                <p>NY Times Review: <span id="movie3-review"></span><p>
-              </div>
+            <div id="content-container">
+              <!-- render content to page here -->
             </div>
         </div>
-      </div>
+        <!-- end block for rendering content to page -->
+
+      </div>  
     </div>
-  
-    <!-- Your Watchlist View when unhidden -->
+    <!-- end searchview content block including search param area and rendered results -->
+
+    <!-- area to render watchlist content -->
     <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
-      <div class="grid-x grid-margin-x small-up-2 medium-up-4 large-up-6">
-        <div class="cell">
-          <div class="card-image">
-            <img src="http://placehold.it/300x500">
-            <!-- <span id="watchlist1-img" class="movieImg" src="" alt=""></span> -->
-          </div>
-          <div class="card-divider">
-            <h3 class="text-center"><span id="watchlist1">Movie Name</span></h3>
-          </div>
-          <div class="card-section">
-          <!-- do we want to display some other result here? imdb rating maybe? -->
-          </div>
-          <div class="card-section">
-            <h3><span id="watchlist1-year">1984</span></h3>
-            <p>NY Times Review: <span id="watchlist1-review"></span><p>
-          </div>
-        </div>
-
-        <div class="cell">
-          <div class="card-image">
-            <img src="http://placehold.it/300x500">
-            <!-- <span id="watchlist2-img" class="movieImg" src="" alt=""></span> -->
-          </div>
-          <div class="card-divider">
-            <h3 class="text-center"><span id="watchlist2">Movie Name</span></h3>
-          </div>
-          <div class="card-section">
-          <!-- do we want to display some other result here? imdb rating maybe? -->
-          </div>
-          <div class="card-section">
-            <h3><span id="watchlist2-year">1984</span></h3>
-            <p>NY Times Review: <span id="watchlist2-review"></span><p>
-          </div>
-        </div>
-
-        <div class="cell">
-          <div class="card-image">
-            <img src="http://placehold.it/300x500">
-            <!-- <span id="watchlist3-img" class="movieImg" src="" alt=""></span> -->
-          </div>
-          <div class="card-divider">
-            <h3 class="text-center"><span id="watchlist3">Movie Name</span></h3>
-          </div>
-          <div class="card-section">
-          <!-- do we want to display some other result here? imdb rating maybe? -->
-          </div>
-          <div class="card-section">
-            <h3><span id="watchlist3-year">1984</span></h3>
-            <p>NY Times Review: <span id="watchlist3-review"></span><p>
-          </div>
-        </div>
-
-        <div class="cell">
-          <div class="card-image">
-            <img src="http://placehold.it/300x500">
-            <!-- <span id="watchlist4-img" class="movieImg" src="" alt=""></span> -->
-          </div>
-          <div class="card-divider">
-            <h3 class="text-center"><span id="watchlist4">Movie Name</span></h3>
-          </div>
-          <div class="card-section">
-          <!-- do we want to display some other result here? imdb rating maybe? -->
-          </div>
-          <div class="card-section">
-            <h3><span id="watchlist4-year">1984</span></h3>
-            <p>NY Times Review: <span id="watchlist4-review"></span><p>
-          </div>
-        </div>
+      <div id="watchlist-container" class="grid-x grid-padding-x">
+        <!-- render watchlist content here -->
       </div>
     </div>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
   <script src="./assets/js/jquery.mobile-1.5.0-rc1.min.js"></script>
