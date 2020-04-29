@@ -90,74 +90,23 @@
         </div>
         <!-- end search params -->
 
-        <!-- render content to page block -->
+        <!-- block for rendering content to page -->
         <div class="cell medium-8 medium-cell-block-y">
             <h2>Your Results:</h2>
-  
-          <div id="card-container" class="grid-x grid-margin-x small-up-1 medium-up-3">
-            <div class="cell">
-              <div class="card-divider">
-                <h3><span id="movie1">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie1-img" class="movieImg" src="" alt=""></span> -->
-              </div>
-              <div class="card-section">
-                <button class="button"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie2-year"></span></h3>
-                <p>NY Times Review: <span id="movie2-review"></span><p>
-              </div>
-            </div>
-  
-            <div class="cell">
-              <div class="card-divider">
-                <h3><span id="movie2">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie2-img" class="movieImg" src="" alt=""></span> -->
-              </div>              
-              <div class="card-section">
-                <button class="button watch"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie2-year"></span></h3>
-                <p>NY Times Review: <span id="movie2-review"></span><p>
-              </div>
-            </div>
-  
-            <div class="cell">
-              <div class="card-divider">
-                <h3><span id="movie3">Movie Name</span></h3>
-              </div>
-              <div class="card-image">
-                <img src="http://placehold.it/300x500">
-                <!-- <span id="movie3-img" class="movieImg" src="" alt=""></span> -->
-              </div>
-              <div class="card-section">
-                <button class="button"><span>Add to watchlist</span></button>
-              </div>
-              <div class="card-section">
-                <h3><span id="movie2-year"></span></h3>
-                <p>NY Times Review: <span id="movie2-review"></span><p>
-              </div>
+            <div id="content-container">
+              <!-- render content to page here -->
             </div>
         </div>
-        </div>
-        <!-- end render content to page block -->
+        <!-- end block for rendering content to page -->
+
       </div>  
     </div>
     <!-- end searchview content block including search param area and rendered results -->
 
     <!-- area to render watchlist content -->
     <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
-      <div class="grid-x grid-padding-x">
-      <div id="watchlist-content" class="grid-x grid-padding-x grid-margin-x small-up-2 large-up-5 medium-up-3 medium-cell-block-y">
-        <!-- render watchlist here -->
-      </div>
+      <div id="watchlist-container" class="grid-x grid-padding-x">
+        <!-- render watchlist content here -->
       </div>
     </div>
   </div>
