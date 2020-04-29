@@ -14,7 +14,7 @@
 
     <!-- header section -->
     <div id="header-container">
-      <header class="cell header medium-cell-block-container sticky" data-sticky data-margin-top="0">
+      <header class="cell header medium-cell-block-container" data-margin-top="0">
         <h1 class ="float-center">Netflix Movie Picker</h1>
         <div class="grid-x grid-padding-x">
           <div class="cell small-6 align-center">
@@ -33,37 +33,39 @@
       <div class="grid-x grid-padding-x">
         <div id="search-queries" class="cell medium-4 medium-cell-block-y">
           <!-- <h4>Search Params</h4> -->
-            <div class="cell small-4 medium-12">
-              <label>Movie or Series:</label>
-              <select id="movieOrSeries">
-                <option value="both">Both</option>
-                <option value="movie">Movie</option>
-                <option value="series">TV Series</option>
-              </select>
-            </div>
-            <div class="cell small-4 medium-12">
-              <label>Genre:</label>
-              <select id="genre">
-                <option value="any">Any</option>
-                <option value="action">Action</option>
-                <option value="animated">Animated</option>
-                <option value="comedy">Comedy</option>
-                <option value="documentary">Documentary</option>
-                <option value="drama">Drama</option>
-                <option value="horror">Horror</option>
-                <option value="romance">Romance</option>
-                <option value="scifi">Sci-Fi</option>
-                <option value="thriller">Thriller</option>
-              </select>
-            </div>
-            <div class="cell small-4 medium-12">
-              <label>Sort By:</label>
-              <select id="sort">
-                <option value="rating">Rating</option>
-                <option value="date">Date</option>
-                <option value="title">Title</option>
-                <option value="runtime">Runtime</option>
-              </select>
+            <div class="grid-x">
+              <div class="cell small-4 medium-12">
+                <label>Movie or Series:</label>
+                <select id="movieOrSeries">
+                  <option value="both">Both</option>
+                  <option value="movie">Movie</option>
+                  <option value="series">TV Series</option>
+                </select>
+              </div>
+              <div class="cell small-4 medium-12">
+                <label>Genre:</label>
+                <select id="genre">
+                  <option value="any">Any</option>
+                  <option value="action">Action</option>
+                  <option value="animated">Animated</option>
+                  <option value="comedy">Comedy</option>
+                  <option value="documentary">Documentary</option>
+                  <option value="drama">Drama</option>
+                  <option value="horror">Horror</option>
+                  <option value="romance">Romance</option>
+                  <option value="scifi">Sci-Fi</option>
+                  <option value="thriller">Thriller</option>
+                </select>
+              </div>
+              <div class="cell small-4 medium-12">
+                <label>Sort By:</label>
+                <select id="sort">
+                  <option value="rating">Rating</option>
+                  <option value="date">Date</option>
+                  <option value="title">Title</option>
+                  <option value="runtime">Runtime</option>
+                </select>
+              </div>
             </div>
 
             <form class="cell">
@@ -88,15 +90,15 @@
         </div>
         <!-- end search params -->
 
-        <!-- render content to page block -->
-        <div id="content-container" class="cell medium-8 medium-cell-block-y">
+        <!-- block for rendering content to page -->
+        <div class="cell medium-8 medium-cell-block-y">
             <h2>Your Results:</h2>
-  
-          <!-- <div id="card-container" class="grid-x grid-margin-x small-up-1 medium-up-3">
-        </div> -->
-        
+            <div id="content-container">
+              <!-- render content to page here -->
+            </div>
         </div>
-        <!-- end render content to page block -->
+        <!-- end block for rendering content to page -->
+
       </div>  
     </div>
     <!-- end searchview content block including search param area and rendered results -->
@@ -104,9 +106,7 @@
     <!-- area to render watchlist content -->
     <div id="watchlist" class="cell medium-auto medium-cell-block-container hide">
       <div id="watchlist-container" class="grid-x grid-padding-x">
-      <!-- <div id="watchlist-content" class="grid-x grid-padding-x grid-margin-x small-up-2 large-up-5 medium-up-3 medium-cell-block-y">
-        
-      </div> -->
+        <!-- render watchlist content here -->
       </div>
     </div>
   </div>
