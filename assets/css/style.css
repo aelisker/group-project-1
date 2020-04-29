@@ -4,6 +4,24 @@ html, body, .fill, .search-col {
   height: 100%; */
 }
 
+body {
+  background-color: #E50914;
+}
+
+#content,
+#watchlist {
+  background-color: #788F9B;
+}
+
+#header-container {
+  border-bottom: 1px solid black;
+}
+
+#search-queries {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
 header {
   padding: 5px 0;
 }
@@ -22,6 +40,7 @@ header {
 }
 
 h1 {
+  text-align: center;
   color: white;
   text-shadow: 2px 2px black;
 }
@@ -36,4 +55,29 @@ h1 {
   color: #EBEDEF;
   font-size: 17px;
   text-shadow: none; 
+}
+
+label,
+h2 {
+  color: white;
+  text-shadow: 1px 1px #37474F;
+}
+
+h2 {
+  text-shadow: 1px 2px #37474F;
+}
+
+.slider-label {
+  text-align: center;
+}
+
+p {
+  color: white;
+  text-shadow: 2px 1px #37474F;
+}
+
+@media only screen and (max-width: 640px) {
+  #search-queries {
+    border-right: 0px;
+  }
 }
