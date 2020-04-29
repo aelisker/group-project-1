@@ -77,6 +77,7 @@ var createQuery = function() {
     var genreQuery = '';
   }
 
+  //create URL for fetch with values taken from selector elements
   var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=25&subtitle=english&countrylist=78&audio=english&offset=0" + 
     seriesOrMovieQuery + 
     sortByQuery +
@@ -86,6 +87,7 @@ var createQuery = function() {
     endRatingQuery + 
     genreQuery;
 
+  //pass URL through to function that fetches from API
   netflixQuery(netflixQueryUrl);
 };
 
@@ -102,6 +104,7 @@ var netflixQuery = function(queryUrl) {
     return response.json();
   })
   .then((data) => {
+    //save results to global array, render data to page after search
     currentQuery = data;
     renderToPage();
     console.log(data);
@@ -112,8 +115,10 @@ var netflixQuery = function(queryUrl) {
 };
 
 var renderToPage = function() {
+  //clear any previous searches
   containerEl.innerHTML = '';
 
+  //get length of result array, print each result
   for (var i = 0; i < currentQuery.results.length; i++) {
 
     var cellContainer = document.createElement("div");
@@ -134,6 +139,7 @@ var renderToPage = function() {
 
     var contentTitle = document.createElement("h4");
     contentTitle.textContent = currentQuery.results[i].title;
+    //look for instances of &#39; and replace with '
     contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
 
     var contentSynopsis = document.createElement("p");
@@ -146,6 +152,7 @@ var renderToPage = function() {
     cardBody.appendChild(cardPoster);
     cardBody.appendChild(cardContent);
 
+    //add netflix ID and result array index as data attributes to button
     var watchlistBtnEl = document.createElement("a");
     watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
     watchlistBtnEl.setAttribute('data-index', i);
@@ -215,6 +222,7 @@ var renderToWatchlist = function() {
   }
 };
 
+//when the search view button is clicked, hide content in watchlist and make sure search content is visible
 var contentView = function() {
   searchViewBtn.classList = 'active-button primary button float-center';
   watchlistViewBtn.classList = 'nonactive-button clear button float-center';
@@ -222,6 +230,7 @@ var contentView = function() {
   watchlistEl.classList = 'cell medium-auto medium-cell-block-container hide';
 };
 
+//when the watchlist button is clicked, hide content in search view and make sure watchlist is visible
 var watchlistView = function() {
   renderToWatchlist();
   searchViewBtn.classList = 'nonactive-button clear button float-center';
@@ -233,8 +242,10 @@ var watchlistView = function() {
 var contentClickHandler = function(event) {
   event.preventDefault();
 
+  //declare variable with target of button click
   var targetEl = event.target;
 
+  //if the button contains the watch class, declare variables for netflix ID and index in search array
   if (targetEl.matches(".watch")) {
     var contentId = targetEl.getAttribute("data-nfid");
     var contentIndex = targetEl.getAttribute("data-index");
@@ -242,21 +253,24 @@ var contentClickHandler = function(event) {
     var saveToStorage = true;
     var removalIndex;
 
-    //declare var false if array already contains title
+    //declare var false if array already contains netflix ID for the title
     for (var i = 0; i < savedToWatchlist.length; i++) {
       if (savedToWatchlist[i].nfid === parseInt(contentId)) {
+        //if the title is already saved to the watchlist, declare saveToStorage var as false and set removal Index to location in saved array
         saveToStorage = false;
         removalIndex = i;
         break;
       }
     }
 
+    //if save to storage var is true, push the title to the saved to watchlist array, save to localstorage
     if (saveToStorage) {
       savedToWatchlist.push(currentQuery.results[contentIndex]);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
     }
 
+    //if save to storage var is false, find existing title in saved array with splice and value set at removal index, then save updated array to localstorage
     if (!saveToStorage) {
       savedToWatchlist.splice(removalIndex, 1);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
@@ -267,6 +281,7 @@ var contentClickHandler = function(event) {
       renderToWatchlist();
     }
 
+    //once item has either been saved or removed from watchlist, update text of button accordingly
     if (targetEl.textContent === 'Add to Watchlist') {
       targetEl.textContent = 'Remove from Watchlist';
     }
