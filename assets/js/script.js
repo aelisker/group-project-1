@@ -172,6 +172,8 @@ var renderToPage = function() {
     cardBody.appendChild(watchlistBtnEl);
     cellContainer.appendChild(cardBody);
 
+    // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
+    // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
     contentContainer.setAttribute('id', 'card-container');
     contentContainer.setAttribute('data-equalizer','');
     contentContainer.setAttribute('data-equalize-by-row', true);
@@ -180,6 +182,7 @@ var renderToPage = function() {
     contentContainer.appendChild(cellContainer);
     containerEl.appendChild(contentContainer);
   }
+  //must initialize to allow foundation (equalize) to work
   $(document).foundation();
 };
 
@@ -232,6 +235,8 @@ var renderToWatchlist = function() {
 
     cellContainer.appendChild(cardBody);
 
+    // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
+    // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
     watchlistEl.classList = 'grid-x grid-padding-x grid-margin-x small-up-2 large-up-5 medium-up-3 medium-cell-block-y';
     watchlistEl.setAttribute('id', 'watchlist-content');
     watchlistEl.setAttribute('data-equalizer','');
@@ -240,6 +245,7 @@ var renderToWatchlist = function() {
 
     watchlistContainer.appendChild(watchlistEl);
   }
+  //must initialize to allow foundation (equalize) to work
   $(document).foundation();
 };
 
@@ -290,6 +296,8 @@ var contentClickHandler = function(event) {
       savedToWatchlist.push(currentQuery.results[contentIndex]);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
+
+      //cannot save to storage from watchlist since already in storage, only need to render to page
       renderToPage();
     }
 
@@ -298,10 +306,9 @@ var contentClickHandler = function(event) {
       savedToWatchlist.splice(removalIndex, 1);
       var resultForLocalstorage = JSON.stringify(savedToWatchlist);
       localStorage.setItem('watchlist', resultForLocalstorage);
-      renderToPage();
 
-      //NEED TO GET THIS WORKING TO DYNAMICALLY UPDATE BUTTON
-      // containerEl.querySelector('a[data-nfid="' + contentId + '"]').textContent = 'Remove from Watchlist';
+      //removing from watchlist could be done either from the watchlist or from the search view page, so run both functions
+      renderToPage();
       renderToWatchlist();
     }
 
@@ -313,7 +320,6 @@ var contentClickHandler = function(event) {
       targetEl.textContent = 'Add to Watchlist';
     }
   }
-  $(document).foundation();
 };
 
 var loadSavedWatchlist = function() {
