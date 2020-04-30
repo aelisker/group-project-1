@@ -156,6 +156,14 @@ var renderToPage = function() {
       cardBody.appendChild(cardPoster);
       cardBody.appendChild(cardContent);
 
+      //create button for Modal
+      var reviewBtn = document.createElement("button");
+      reviewBtn.classList = 'hollow button modal';
+      reviewBtn.setAttribute('data-title', currentQuery.results[i].title);
+      reviewBtn.setAttribute('data-open', 'reviewModal');
+      reviewBtn.textContent = 'Search for Reviews';
+      cardBody.appendChild(reviewBtn);
+      
       //add netflix ID and result array index as data attributes to button
       var watchlistBtnEl = document.createElement("a");
       watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
@@ -227,6 +235,14 @@ var renderToWatchlist = function() {
     cardBody.appendChild(cardPoster);
     cardBody.appendChild(cardContent);
 
+    //create button for Modal
+    var reviewBtn = document.createElement("button");
+    reviewBtn.classList = 'hollow button modal';
+    reviewBtn.setAttribute('data-title', savedToWatchlist[i].title);
+    reviewBtn.setAttribute('data-open', 'reviewModal');
+    reviewBtn.textContent = 'Search for Reviews';
+    cardBody.appendChild(reviewBtn);
+
     var watchlistBtnEl = document.createElement("a");
     watchlistBtnEl.classList = 'button expanded watch';
     watchlistBtnEl.textContent = 'Remove from Watchlist';
@@ -270,7 +286,7 @@ var watchlistView = function() {
 };
 
 var contentClickHandler = function(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   //declare variable with target of button click
   var targetEl = event.target;
@@ -324,6 +340,74 @@ var contentClickHandler = function(event) {
   }
 };
 
+var reviewBtnClickHandler = function(event) {
+  event.preventDefault();
+
+  //declare variable with target of button click
+  var targetEl = event.target;
+
+  //only run NYT fetch if modal button was clicked, ignore if other class of button
+  if (targetEl.matches(".modal")) {
+    var title = targetEl.getAttribute("data-title");
+
+    var NYTQueryUrl = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=" + title +"&api-key=mB94iAcyCiri93Za4wzOjH4ncjfcgGm8";
+    fetch(NYTQueryUrl, {
+      "method": "GET"
+    })
+      .then(response => {
+        return response.json();
+    })
+      .then((data) => {
+        //pass through result to modal render function
+        console.log(data);
+        renderToModal(data, title);
+    })
+      .catch(err => {
+        console.log(err);
+    });  
+  }
+  //needed for foundation modal to work properly
+  $(document).foundation();
+}
+
+var renderToModal = function(data, title) {
+  //without these two lines, close button covers width of entire modal, need these to keep in top right corner
+  var closeBtn = document.querySelector('#closeBtn');
+  closeBtn.classList = 'close-button';
+
+  //clear out previous content
+  var reviewContainer = document.querySelector('#reviewContent');
+  reviewContainer.innerHTML = '';
+
+  //if results array has content, run through for loop to render review links to modal
+  if (data.results.length > 0) {
+    for (var i = 0; data.results.length > i; i++) {
+      var reviewDiv = document.createElement('div');
+      var reviewTitle = document.createElement('h4');
+      var reviewLink = document.createElement('a');
+
+      reviewTitle.textContent = data.results[i].display_title;
+      reviewLink.setAttribute('href', data.results[i].link.url);
+      reviewLink.textContent = 'Click here to view the New York Times review of ' + data.results[i].display_title + '!';
+      reviewLink.classList = 'reviewLink';
+
+      reviewDiv.appendChild(reviewTitle);
+      reviewDiv.appendChild(reviewLink);
+
+      reviewContainer.appendChild(reviewDiv);
+    }
+  }
+  //if results array is empty, inform user that no NYT reviews for selected title could be found
+  else {
+    var reviewDiv = document.createElement('div');
+    var noReviewText = document.createElement('p');
+
+    noReviewText.textContent = 'Sorry, but it looks like we can\'t find any reviews for ' + title + ' on New York Times!';
+    reviewDiv.appendChild(noReviewText);
+    reviewContainer.appendChild(reviewDiv);
+  }
+}
+
 var loadSavedWatchlist = function() {
   savedToWatchlist = JSON.parse(localStorage.getItem("watchlist"));
   
@@ -333,6 +417,7 @@ var loadSavedWatchlist = function() {
   }
 };
 
+pageContentEl.addEventListener("click", reviewBtnClickHandler);
 pageContentEl.addEventListener("click", contentClickHandler);
 searchButton.addEventListener("click", createQuery);
 searchViewBtn.addEventListener("click", contentView);
