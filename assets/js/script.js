@@ -387,6 +387,7 @@ var renderToModal = function(data, title) {
       var reviewLink = document.createElement('a');
 
       reviewTitle.textContent = data.results[i].display_title;
+      reviewTitle.classList = "reviewH4";
       reviewLink.setAttribute('href', data.results[i].link.url);
       reviewLink.textContent = 'Click here to view the New York Times review of ' + data.results[i].display_title + '!';
       reviewLink.classList = 'reviewLink';
