@@ -46,6 +46,10 @@ header {
   color: white;
 }
 
+.hollow {
+  margin: 0 1px;
+}
+
 #header-container {
   background-color: 	#E50914;
 }
@@ -54,6 +58,16 @@ h1 {
   text-align: center;
   color: white;
   text-shadow: 2px 2px black;
+}
+
+#reviewH3 {
+  color: black;
+  text-shadow: none;
+}
+
+.reviewLink {
+  color: #0000EE !important;
+  text-shadow: none !important;
 }
 
 .card {
