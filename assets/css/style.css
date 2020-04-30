@@ -5,17 +5,24 @@ html, body, .fill, .search-col {
 }
 
 body {
-  background-color: #E50914;
+  background-color: darkgray;
+  /* background-color: #E50914; */
+}
+
+#pageContent {
+  background-color: darkgray;
+  height: 100vh;
 }
 
 #content,
 #watchlist {
-  background-color: #788F9B;
+  /* background-color: #788F9B; */
+  background-color: darkgray;
 }
 
 #header-container {
-  height: 150px !important;
-  /* position: fixed;
+  /* height: 150px !important;
+  position: fixed;
   top: 0;
   width: 100%; */
   border-bottom: 1px solid black;
@@ -39,6 +46,10 @@ header {
   color: white;
 }
 
+.hollow {
+  margin: 0 1px;
+}
+
 #header-container {
   background-color: 	#E50914;
 }
@@ -47,6 +58,15 @@ h1 {
   text-align: center;
   color: white;
   text-shadow: 2px 2px black;
+}
+
+.reviewLink {
+  color: #0000EE !important;
+  text-shadow: none !important;
+}
+
+.card {
+  color: black;
 }
 
 .active-button {
@@ -75,13 +95,103 @@ h2 {
   text-align: center;
 }
 
-p {
-  color: white;
-  text-shadow: 2px 1px #37474F;
+a {
+  color: white !important;
+  border: solid white 1px !important;
+  padding: 16.5px !important;
 }
 
-@media only screen and (max-width: 640px) {
+.reviewLink {
+  color: #2E9AFE !important;
+  text-shadow: 1px 1px black;
+  border: none !important;
+  text-decoration: underline;
+  float: left;
+}
+
+.nonactive-button {
+  padding-bottom: 18.5px !important;
+}
+
+h4 {
+  border-bottom: solid;
+}
+
+p {
+  color: black;
+}
+
+a.button {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+a.button:hover {
+  color: #788f9b;
+  text-shadow: 1px 1px #37474F;
+}
+
+.reveal {
+  background-color: #E50914;
+  border: 1px solid black;
+}
+
+#reviewH3 {
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.reviewH4 {
+  font-size: 20px;
+  color: white;
+  text-shadow: 1px 1px black;
+  border-bottom: 1px solid black;
+}
+
+@media only screen and (max-width: 639px) {
   #search-queries {
     border-right: 0px;
+  }
+  label {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  label {
+    font-size: .82rem !important;
+  }
+  option {
+    font-size: .82rem !important;
+  }
+  select {
+    font-size: .82rem !important;
+  }
+}
+
+@media only screen and (max-width: 333px) {
+  #search-view,
+  #watchlist-view {
+    font-size: 19px;
+  }
+  .active-button {
+    font-size: 19px;
+  }
+  .nonactive-button {
+    font-size: 19px;
+  }
+}
+
+@media print, screen and (max-width: 39.99875em){
+  .reveal {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: auto;
+    margin-left: 0;
   }
 }

@@ -78,7 +78,7 @@ var createQuery = function() {
   }
 
   //create URL for fetch with values taken from selector elements
-  var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=25&subtitle=english&countrylist=78&audio=english&offset=0" + 
+  var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=99&subtitle=english&countrylist=78&audio=english&offset=0" + 
     seriesOrMovieQuery + 
     sortByQuery +
     startYearQuery + 
@@ -120,80 +120,78 @@ var renderToPage = function() {
 
   var contentContainer = document.createElement("div");
 
-  //get length of result array, print each result
-  for (var i = 0; i < currentQuery.results.length; i++) {
+  if (currentQuery) {
+     //get length of result array, print each result
+    for (var i = 0; i < currentQuery.results.length; i++) {
 
-    var cellContainer = document.createElement("div");
-    cellContainer.classList = 'cell';
+      var cellContainer = document.createElement("div");
+      cellContainer.classList = 'cell';
 
-    var cardBody = document.createElement("div");
-    cardBody.classList = 'card';
-    cardBody.setAttribute('data-equalizer-watch', '');
+      var cardBody = document.createElement("div");
+      cardBody.classList = 'card';
+      cardBody.setAttribute('data-equalizer-watch', '');
 
-    var cardPoster = document.createElement("img");
-    cardPoster.setAttribute('src', currentQuery.results[i].poster);
-    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
-    $(cardPoster).on("error", function() {
-      $(this).attr('src', './assets/img/300x420.png');
-    });
+      var cardPoster = document.createElement("img");
+      cardPoster.setAttribute('src', currentQuery.results[i].poster);
+      //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+      $(cardPoster).on("error", function() {
+        $(this).attr('src', './assets/img/300x420.png');
+      });
 
-    var cardContent = document.createElement("div");
-    cardContent.classList = 'card-section';
+      var cardContent = document.createElement("div");
+      cardContent.classList = 'card-section';
 
-    var contentTitle = document.createElement("h4");
-    contentTitle.textContent = currentQuery.results[i].title;
+      var contentTitle = document.createElement("h4");
+      contentTitle.textContent = currentQuery.results[i].title;
+      //look for instances of &#39; and replace with '
+      contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
 
-    // have to limit the times pulled-too many query's will crash the page 
-    if (i < 5) {
-    NYTimesReview(currentQuery.results[i].title); 
-  }
-  
-    // stopped at figuring out how to display textContent("See the NY Times Review(s)");
-    // for today anyways. >_< *
+      var contentSynopsis = document.createElement("p");
+      contentSynopsis.textContent = currentQuery.results[i].synopsis;
+      contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
 
+      cardContent.appendChild(contentTitle);
+      cardContent.appendChild(contentSynopsis);
 
+      cardBody.appendChild(cardPoster);
+      cardBody.appendChild(cardContent);
 
+      //create button for Modal
+      var reviewBtn = document.createElement("button");
+      reviewBtn.classList = 'hollow button modal';
+      reviewBtn.setAttribute('data-title', currentQuery.results[i].title);
+      reviewBtn.setAttribute('data-open', 'reviewModal');
+      reviewBtn.textContent = 'Search for Reviews';
+      cardBody.appendChild(reviewBtn);
+      
+      //add netflix ID and result array index as data attributes to button
+      var watchlistBtnEl = document.createElement("a");
+      watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
+      watchlistBtnEl.setAttribute('data-index', i);
+      watchlistBtnEl.classList = 'button expanded watch';
 
-    //look for instances of &#39; and replace with '
-    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+      //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+      if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
+        watchlistBtnEl.textContent = 'Remove from Watchlist';
+      }
+      else {
+        watchlistBtnEl.textContent = 'Add to Watchlist';
+      }
+      
+      cardBody.appendChild(watchlistBtnEl);
+      cellContainer.appendChild(cardBody);
 
-    var contentSynopsis = document.createElement("p");
-    contentSynopsis.textContent = currentQuery.results[i].synopsis;
-    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
-
-    cardContent.appendChild(contentTitle);
-    cardContent.appendChild(contentSynopsis);
-
-    cardBody.appendChild(cardPoster);
-    cardBody.appendChild(cardContent);
-
-    //add netflix ID and result array index as data attributes to button
-    var watchlistBtnEl = document.createElement("a");
-    watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
-    watchlistBtnEl.setAttribute('data-index', i);
-    watchlistBtnEl.classList = 'button expanded watch';
-
-    //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
-    if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
-      watchlistBtnEl.textContent = 'Remove from Watchlist';
+      // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
+      // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
+      contentContainer.setAttribute('id', 'card-container');
+      contentContainer.setAttribute('data-equalizer','');
+      contentContainer.setAttribute('data-equalize-by-row', true);
+      contentContainer.classList = 'grid-x grid-margin-x small-up-2 medium-up-3';
+      
+      contentContainer.appendChild(cellContainer);
+      containerEl.appendChild(contentContainer);
     }
-    else {
-      watchlistBtnEl.textContent = 'Add to Watchlist';
-    }
-    
-    cardBody.appendChild(watchlistBtnEl);
-    cellContainer.appendChild(cardBody);
-
-    // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
-    // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
-    contentContainer.setAttribute('id', 'card-container');
-    contentContainer.setAttribute('data-equalizer','');
-    contentContainer.setAttribute('data-equalize-by-row', true);
-    contentContainer.classList = 'grid-x grid-margin-x small-up-1 medium-up-3';
-    
-    contentContainer.appendChild(cellContainer);
-    containerEl.appendChild(contentContainer);
-  }
+  } 
   //must initialize to allow foundation (equalize) to work
   $(document).foundation();
 };
@@ -236,6 +234,14 @@ var renderToWatchlist = function() {
 
     cardBody.appendChild(cardPoster);
     cardBody.appendChild(cardContent);
+
+    //create button for Modal
+    var reviewBtn = document.createElement("button");
+    reviewBtn.classList = 'hollow button modal';
+    reviewBtn.setAttribute('data-title', savedToWatchlist[i].title);
+    reviewBtn.setAttribute('data-open', 'reviewModal');
+    reviewBtn.textContent = 'Search for Reviews';
+    cardBody.appendChild(reviewBtn);
 
     var watchlistBtnEl = document.createElement("a");
     watchlistBtnEl.classList = 'button expanded watch';
@@ -280,7 +286,7 @@ var watchlistView = function() {
 };
 
 var contentClickHandler = function(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   //declare variable with target of button click
   var targetEl = event.target;
@@ -334,6 +340,75 @@ var contentClickHandler = function(event) {
   }
 };
 
+var reviewBtnClickHandler = function(event) {
+  event.preventDefault();
+
+  //declare variable with target of button click
+  var targetEl = event.target;
+
+  //only run NYT fetch if modal button was clicked, ignore if other class of button
+  if (targetEl.matches(".modal")) {
+    var title = targetEl.getAttribute("data-title");
+
+    var NYTQueryUrl = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=" + title +"&api-key=mB94iAcyCiri93Za4wzOjH4ncjfcgGm8";
+    fetch(NYTQueryUrl, {
+      "method": "GET"
+    })
+      .then(response => {
+        return response.json();
+    })
+      .then((data) => {
+        //pass through result to modal render function
+        console.log(data);
+        renderToModal(data, title);
+    })
+      .catch(err => {
+        console.log(err);
+    });  
+  }
+  //needed for foundation modal to work properly
+  $(document).foundation();
+}
+
+var renderToModal = function(data, title) {
+  //without these two lines, close button covers width of entire modal, need these to keep in top right corner
+  var closeBtn = document.querySelector('#closeBtn');
+  closeBtn.classList = 'close-button';
+
+  //clear out previous content
+  var reviewContainer = document.querySelector('#reviewContent');
+  reviewContainer.innerHTML = '';
+
+  //if results array has content, run through for loop to render review links to modal
+  if (data.results.length > 0) {
+    for (var i = 0; data.results.length > i; i++) {
+      var reviewDiv = document.createElement('div');
+      var reviewTitle = document.createElement('h4');
+      var reviewLink = document.createElement('a');
+
+      reviewTitle.textContent = data.results[i].display_title;
+      reviewTitle.classList = "reviewH4";
+      reviewLink.setAttribute('href', data.results[i].link.url);
+      reviewLink.textContent = 'Click here to view the New York Times review of ' + data.results[i].display_title + '!';
+      reviewLink.classList = 'reviewLink';
+
+      reviewDiv.appendChild(reviewTitle);
+      reviewDiv.appendChild(reviewLink);
+
+      reviewContainer.appendChild(reviewDiv);
+    }
+  }
+  //if results array is empty, inform user that no NYT reviews for selected title could be found
+  else {
+    var reviewDiv = document.createElement('div');
+    var noReviewText = document.createElement('p');
+
+    noReviewText.textContent = 'Sorry, but it looks like we can\'t find any reviews for ' + title + ' on New York Times!';
+    reviewDiv.appendChild(noReviewText);
+    reviewContainer.appendChild(reviewDiv);
+  }
+}
+
 var loadSavedWatchlist = function() {
   savedToWatchlist = JSON.parse(localStorage.getItem("watchlist"));
   
@@ -343,6 +418,7 @@ var loadSavedWatchlist = function() {
   }
 };
 
+pageContentEl.addEventListener("click", reviewBtnClickHandler);
 pageContentEl.addEventListener("click", contentClickHandler);
 searchButton.addEventListener("click", createQuery);
 searchViewBtn.addEventListener("click", contentView);
