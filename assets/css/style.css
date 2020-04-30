@@ -11,6 +11,7 @@ body {
 
 #pageContent {
   background-color: darkgray;
+  height: 100vh;
 }
 
 #content,
@@ -103,5 +104,17 @@ a {
 @media only screen and (max-width: 640px) {
   #search-queries {
     border-right: 0px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  label {
+    font-size: .82rem !important;
+  }
+  option {
+    font-size: .82rem !important;
+  }
+  select {
+    font-size: .82rem !important;
   }
 }

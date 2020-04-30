@@ -78,7 +78,7 @@ var createQuery = function() {
   }
 
   //create URL for fetch with values taken from selector elements
-  var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=25&subtitle=english&countrylist=78&audio=english&offset=0" + 
+  var netflixQueryUrl = "https://unogsng.p.rapidapi.com/search?country_andorunique=US&audiosubtitle_andor=and&limit=99&subtitle=english&countrylist=78&audio=english&offset=0" + 
     seriesOrMovieQuery + 
     sortByQuery +
     startYearQuery + 
