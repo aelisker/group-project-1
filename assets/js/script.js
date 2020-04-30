@@ -120,68 +120,70 @@ var renderToPage = function() {
 
   var contentContainer = document.createElement("div");
 
-  //get length of result array, print each result
-  for (var i = 0; i < currentQuery.results.length; i++) {
+  if (currentQuery) {
+     //get length of result array, print each result
+    for (var i = 0; i < currentQuery.results.length; i++) {
 
-    var cellContainer = document.createElement("div");
-    cellContainer.classList = 'cell';
+      var cellContainer = document.createElement("div");
+      cellContainer.classList = 'cell';
 
-    var cardBody = document.createElement("div");
-    cardBody.classList = 'card';
-    cardBody.setAttribute('data-equalizer-watch', '');
+      var cardBody = document.createElement("div");
+      cardBody.classList = 'card';
+      cardBody.setAttribute('data-equalizer-watch', '');
 
-    var cardPoster = document.createElement("img");
-    cardPoster.setAttribute('src', currentQuery.results[i].poster);
-    //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
-    $(cardPoster).on("error", function() {
-      $(this).attr('src', './assets/img/300x420.png');
-    });
+      var cardPoster = document.createElement("img");
+      cardPoster.setAttribute('src', currentQuery.results[i].poster);
+      //if image doesn't load, use jquery from https://css-tricks.com/snippets/jquery/better-broken-image-handling/ to replace with placeholder
+      $(cardPoster).on("error", function() {
+        $(this).attr('src', './assets/img/300x420.png');
+      });
 
-    var cardContent = document.createElement("div");
-    cardContent.classList = 'card-section';
+      var cardContent = document.createElement("div");
+      cardContent.classList = 'card-section';
 
-    var contentTitle = document.createElement("h4");
-    contentTitle.textContent = currentQuery.results[i].title;
-    //look for instances of &#39; and replace with '
-    contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
+      var contentTitle = document.createElement("h4");
+      contentTitle.textContent = currentQuery.results[i].title;
+      //look for instances of &#39; and replace with '
+      contentTitle.textContent = contentTitle.textContent.replace('&#39;', "'");
 
-    var contentSynopsis = document.createElement("p");
-    contentSynopsis.textContent = currentQuery.results[i].synopsis;
-    contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
+      var contentSynopsis = document.createElement("p");
+      contentSynopsis.textContent = currentQuery.results[i].synopsis;
+      contentSynopsis.textContent = contentSynopsis.textContent.replace('&#39;', "'");
 
-    cardContent.appendChild(contentTitle);
-    cardContent.appendChild(contentSynopsis);
+      cardContent.appendChild(contentTitle);
+      cardContent.appendChild(contentSynopsis);
 
-    cardBody.appendChild(cardPoster);
-    cardBody.appendChild(cardContent);
+      cardBody.appendChild(cardPoster);
+      cardBody.appendChild(cardContent);
 
-    //add netflix ID and result array index as data attributes to button
-    var watchlistBtnEl = document.createElement("a");
-    watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
-    watchlistBtnEl.setAttribute('data-index', i);
-    watchlistBtnEl.classList = 'button expanded watch';
+      //add netflix ID and result array index as data attributes to button
+      var watchlistBtnEl = document.createElement("a");
+      watchlistBtnEl.setAttribute('data-nfid', currentQuery.results[i].nfid);
+      watchlistBtnEl.setAttribute('data-index', i);
+      watchlistBtnEl.classList = 'button expanded watch';
 
-    //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
-    if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
-      watchlistBtnEl.textContent = 'Remove from Watchlist';
+      //function found at following link to check if value is in object in array without for loop https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+      if (savedToWatchlist.some(e => e.nfid === currentQuery.results[i].nfid)) {
+        watchlistBtnEl.textContent = 'Remove from Watchlist';
+      }
+      else {
+        watchlistBtnEl.textContent = 'Add to Watchlist';
+      }
+      
+      cardBody.appendChild(watchlistBtnEl);
+      cellContainer.appendChild(cardBody);
+
+      // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
+      // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
+      contentContainer.setAttribute('id', 'card-container');
+      contentContainer.setAttribute('data-equalizer','');
+      contentContainer.setAttribute('data-equalize-by-row', true);
+      contentContainer.classList = 'grid-x grid-margin-x small-up-2 medium-up-3';
+      
+      contentContainer.appendChild(cellContainer);
+      containerEl.appendChild(contentContainer);
     }
-    else {
-      watchlistBtnEl.textContent = 'Add to Watchlist';
-    }
-    
-    cardBody.appendChild(watchlistBtnEl);
-    cellContainer.appendChild(cardBody);
-
-    // previously included div in html to begin, caused issue with data equalizer attributes not working and equalizer breaking after add/remove from watchlist, switching views, etc
-    // to fix, needed to create the div dynamically, clear innerhtml of parent and render to page on every click or view switch
-    contentContainer.setAttribute('id', 'card-container');
-    contentContainer.setAttribute('data-equalizer','');
-    contentContainer.setAttribute('data-equalize-by-row', true);
-    contentContainer.classList = 'grid-x grid-margin-x small-up-1 medium-up-3';
-    
-    contentContainer.appendChild(cellContainer);
-    containerEl.appendChild(contentContainer);
-  }
+  } 
   //must initialize to allow foundation (equalize) to work
   $(document).foundation();
 };

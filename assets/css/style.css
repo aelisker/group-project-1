@@ -5,17 +5,23 @@ html, body, .fill, .search-col {
 }
 
 body {
-  background-color: #E50914;
+  background-color: darkgray;
+  /* background-color: #E50914; */
+}
+
+#pageContent {
+  background-color: darkgray;
 }
 
 #content,
 #watchlist {
-  background-color: #788F9B;
+  /* background-color: #788F9B; */
+  background-color: darkgray;
 }
 
 #header-container {
-  height: 150px !important;
-  /* position: fixed;
+  /* height: 150px !important;
+  position: fixed;
   top: 0;
   width: 100%; */
   border-bottom: 1px solid black;
@@ -49,6 +55,10 @@ h1 {
   text-shadow: 2px 2px black;
 }
 
+.card {
+  color: black;
+}
+
 .active-button {
   color: white;
   font-size: 19px;
@@ -75,10 +85,20 @@ h2 {
   text-align: center;
 }
 
-p {
+a {
+  color: white !important;
+  border: solid white 1px !important;
+  padding: 16.5px !important;
+}
+
+.nonactive-button {
+  padding-bottom: 18.5px !important;
+}
+
+/* p {
   color: white;
   text-shadow: 2px 1px #37474F;
-}
+} */
 
 @media only screen and (max-width: 640px) {
   #search-queries {
