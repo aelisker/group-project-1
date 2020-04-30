@@ -106,18 +106,40 @@ a {
   padding: 16.5px !important;
 }
 
+.reviewLink {
+  border: none;
+  text-decoration: underline;
+  float: left;
+}
+
 .nonactive-button {
   padding-bottom: 18.5px !important;
 }
 
-/* p {
-  color: white;
-  text-shadow: 2px 1px #37474F;
-} */
+h4 {
+  border-bottom: solid;
+}
 
-@media only screen and (max-width: 640px) {
+p {
+  color: black;
+}
+
+a.button {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+a.button:hover {
+  color: #788f9b;
+  text-shadow: 1px 1px #37474F;
+}
+
+@media only screen and (max-width: 639px) {
   #search-queries {
     border-right: 0px;
+  }
+  label {
+    text-align: center;
   }
 }
 
@@ -130,5 +152,18 @@ a {
   }
   select {
     font-size: .82rem !important;
+  }
+}
+
+@media only screen and (max-width: 333px) {
+  #search-view,
+  #watchlist-view {
+    font-size: 19px;
+  }
+  .active-button {
+    font-size: 19px;
+  }
+  .nonactive-button {
+    font-size: 19px;
   }
 }
