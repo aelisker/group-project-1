@@ -4,7 +4,7 @@
 Netflix Movie Picker is a site that helps you narrow down what movie or show you would like to watch next. You can enter parameters for movie or series, genre, release year range, and IMDB rating. You can also sort results by rating, date, title and runtime. Save titles you want to watch to your Watchlist for later!
 
 ## Important Note
-You can view the [live site here](https://aelisker.github.io/netflix-movie-picker/), but please not that this application will not work without an API key for [unogsNG](https://rapidapi.com/unogs/api/unogsng/details). Once you have acquired an API key, replace the apiKey variable in [script.js](./assets/js/script.js).
+You can view the [live site here](https://aelisker.github.io/netflix-movie-picker/), but please note that this application will not work without an API key for [unogsNG](https://rapidapi.com/unogs/api/unogsng/details). Once you have acquired an API key, replace the apiKey variable in [script.js](./assets/js/script.js).
 
 ## Technologies Used:
 -HTML<br/>
