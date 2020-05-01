@@ -109,6 +109,11 @@ a {
   float: left;
 }
 
+#noReview {
+  color: white !important;
+  text-shadow: none;
+}
+
 .nonactive-button {
   padding-bottom: 18.5px !important;
 }

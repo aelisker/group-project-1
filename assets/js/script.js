@@ -403,6 +403,7 @@ var renderToModal = function(data, title) {
     var reviewDiv = document.createElement('div');
     var noReviewText = document.createElement('p');
 
+    noReviewText.setAttribute('id', 'noReview');
     noReviewText.textContent = 'Sorry, but it looks like we can\'t find any reviews for ' + title + ' on New York Times!';
     reviewDiv.appendChild(noReviewText);
     reviewContainer.appendChild(reviewDiv);
