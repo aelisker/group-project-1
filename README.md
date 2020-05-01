@@ -18,7 +18,7 @@ You can view the [live site here](https://aelisker.github.io/netflix-movie-picke
 ## Screenshots
 You can find a screenshot of both the desktop search page and mobile watchlist page, below.
 <br/>
-![mobile-watchlist-gif](./assets/images/watchlist.gif)
+![mobile-watchlist-gif](./assets/img/watchlist.gif)
 <br/>
-![desktop-search-view](./assets/images/browser.jpg)
+![desktop-search-view](./assets/img/browser.jpg)
 
