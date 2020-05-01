@@ -386,6 +386,7 @@ var renderToModal = function(data, title) {
       var reviewTitle = document.createElement('h4');
       var reviewLink = document.createElement('a');
 
+      reviewDiv.classList = 'review-div';
       reviewTitle.textContent = data.results[i].display_title;
       reviewTitle.classList = "reviewH4";
       reviewLink.setAttribute('href', data.results[i].link.url);
@@ -403,6 +404,7 @@ var renderToModal = function(data, title) {
     var reviewDiv = document.createElement('div');
     var noReviewText = document.createElement('p');
 
+    noReviewText.setAttribute('id', 'noReview');
     noReviewText.textContent = 'Sorry, but it looks like we can\'t find any reviews for ' + title + ' on New York Times!';
     reviewDiv.appendChild(noReviewText);
     reviewContainer.appendChild(reviewDiv);
