@@ -114,6 +114,10 @@ a {
   text-shadow: none;
 }
 
+.review-div {
+  overflow: auto;
+}
+
 .nonactive-button {
   padding-bottom: 18.5px !important;
 }

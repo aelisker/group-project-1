@@ -386,6 +386,7 @@ var renderToModal = function(data, title) {
       var reviewTitle = document.createElement('h4');
       var reviewLink = document.createElement('a');
 
+      reviewDiv.classList = 'review-div';
       reviewTitle.textContent = data.results[i].display_title;
       reviewTitle.classList = "reviewH4";
       reviewLink.setAttribute('href', data.results[i].link.url);
